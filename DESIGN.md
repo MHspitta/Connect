@@ -44,7 +44,7 @@ struct Activity: Codable {
 
 struct matches?
 
-FUNCTIONS  
+----- Functions -----  
 
 SignUp()  
 participate()  
