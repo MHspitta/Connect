@@ -26,7 +26,7 @@ Het is tegenwoordig hartstikke normaal om via tinder een nieuwe vlam te vinden, 
 **Prerequisites**  
 
 Activiteiten API: http://www.uitinnoordholland.nl/api/agenda/  
-Facebook login (optioneel) : https://developers.facebook.com/docs/facebook-login/ios
-Google maps API (optioneel):  https://cloud.google.com/maps-platform/
+Facebook login (optioneel) : https://developers.facebook.com/docs/facebook-login/ios  
+Google maps API (optioneel):  https://cloud.google.com/maps-platform/  
 
 Firebase: https://console.firebase.google.com/  
