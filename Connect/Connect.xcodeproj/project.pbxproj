@@ -79,7 +79,6 @@
 		41B123F920C69C220008E343 = {
 			isa = PBXGroup;
 			children = (
-				41B1243320C6A4F00008E343 /* Structs.swift */,
 				41B1240420C69C230008E343 /* Connect */,
 				41B1241920C69C2B0008E343 /* ConnectTests */,
 				41B1242420C69C2B0008E343 /* ConnectUITests */,
@@ -102,6 +101,7 @@
 			children = (
 				41B1240520C69C230008E343 /* AppDelegate.swift */,
 				41B1240720C69C230008E343 /* ViewController.swift */,
+				41B1243320C6A4F00008E343 /* Structs.swift */,
 				41B1240920C69C230008E343 /* Main.storyboard */,
 				41B1240C20C69C2A0008E343 /* Assets.xcassets */,
 				41B1240E20C69C2A0008E343 /* LaunchScreen.storyboard */,
