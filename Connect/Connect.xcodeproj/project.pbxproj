@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4155555C20C940D700A1C2CF /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4155555B20C940D700A1C2CF /* ConnectViewController.swift */; };
 		41B1240620C69C230008E343 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B1240520C69C230008E343 /* AppDelegate.swift */; };
 		41B1240820C69C230008E343 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B1240720C69C230008E343 /* ViewController.swift */; };
 		41B1240B20C69C230008E343 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B1240920C69C230008E343 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4155555B20C940D700A1C2CF /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
 		41B1240220C69C230008E343 /* Connect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41B1240520C69C230008E343 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41B1240720C69C230008E343 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				41B1240720C69C230008E343 /* ViewController.swift */,
 				41B1243320C6A4F00008E343 /* Structs.swift */,
 				41B1240920C69C230008E343 /* Main.storyboard */,
+				4155555B20C940D700A1C2CF /* ConnectViewController.swift */,
 				41B1240C20C69C2A0008E343 /* Assets.xcassets */,
 				41B1240E20C69C2A0008E343 /* LaunchScreen.storyboard */,
 				41B1241120C69C2A0008E343 /* Info.plist */,
@@ -262,6 +265,7 @@
 				41B1243420C6A4F00008E343 /* Structs.swift in Sources */,
 				41B1240820C69C230008E343 /* ViewController.swift in Sources */,
 				41B1240620C69C230008E343 /* AppDelegate.swift in Sources */,
+				4155555C20C940D700A1C2CF /* ConnectViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
