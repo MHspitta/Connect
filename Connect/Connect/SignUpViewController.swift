@@ -11,6 +11,9 @@ import Firebase
 
 class SignUpViewController: UIViewController {
     
+    
+    //MARK: - Outlets
+    
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var SignUp: UIButton!
@@ -31,11 +34,10 @@ class SignUpViewController: UIViewController {
                     
                     // Check for errors
                     if user != nil {
-                        // Sign Up succesfull
-                        self.succesMessage.text = "You succesfully, signed up!"
+                        self.performSegue(withIdentifier: "SignUpSuccesSegue", sender: self)
                     } else {
                         if let myError = error?.localizedDescription {
-                            print(myError)
+                            self.succesMessage.text = myError
                         } else {
                             self.succesMessage.text = "ERROR, signup failed!"
                         }
@@ -51,11 +53,12 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         succesMessage.text = ""
-        // Do any additional setup after loading the view.
     }
     
+    //MARK: - Functions
+    
+    // Function to clear the password inputs
     func clearAll() {
-        emailText.text = ""
         passwordTextCheck.text = ""
         passwordText.text = ""
     }

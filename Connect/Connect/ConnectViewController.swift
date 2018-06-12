@@ -10,6 +10,8 @@ import UIKit
 
 class ConnectViewController: UIViewController {
     
+    //MARK: - Outlets
+    
     @IBOutlet weak var card: UIView!
     @IBOutlet weak var thumbImage: UIImageView!
     
@@ -72,6 +74,7 @@ class ConnectViewController: UIViewController {
         resetCard()
     }
     
+    // Function to reset the card
     func resetCard() {
         UIView.animate(withDuration: 0.2, animations: {
             self.card.center = self.view.center

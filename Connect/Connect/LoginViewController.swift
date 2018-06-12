@@ -11,20 +11,32 @@ import Firebase
 
 class LoginViewController: UIViewController {
     
+    //MARK: - Outlets
+    
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet weak var errorLabel: UILabel!
     
+    
+    //MARK: - Functions
+    
+    // Function to login
     @IBAction func login(_ sender: UIButton) {
+        
+        // Check input
         if emailText.text != "" && passwordText.text != "" {
+            
+            // Login
             Auth.auth().signIn(withEmail: emailText.text! , password: passwordText.text!) { (user, error) in
                 
+                // Check if input is correct else error message
                 if user != nil {
-                    // Sign in succesfull
+                    self.performSegue(withIdentifier: "loginSuccesSegue", sender: self)
                 } else {
                     if let myError = error?.localizedDescription {
-                        print(myError)
+                        self.errorLabel.text = myError
                     } else {
-                        print("ERROR, login failed!")
+                        self.errorLabel.text = "ERROR, login failed!"
                     }
                 }
             
@@ -34,8 +46,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        errorLabel.text = ""
     }
 
 }
