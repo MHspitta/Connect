@@ -16,9 +16,10 @@ Het is tegenwoordig hartstikke normaal om via tinder een nieuwe vlam te vinden o
 **MVP**  
 
 - Log in (via fb?)  
-- Activiteiten zoeken en aanmaken  
+- Activiteiten swipen 
+- Activiteiten aanmaken
 - Profiel aanpassingen
-- Swipe Functie
+- Vriendenlijst
 
 - Chat functie (optioneel)
 - Google maps locatie (Optioneel)
