@@ -16,7 +16,6 @@ class ProfileViewController: UIViewController {
         performSegue(withIdentifier: "logOutSegue", sender: self)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

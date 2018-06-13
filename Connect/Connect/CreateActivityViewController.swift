@@ -19,13 +19,14 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var maxParticipants: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var locationActivity: UITextField!
+    @IBOutlet weak var descriptionTextfield: UITextView!
     
     //MARK: - Variables
     
     var ref: DatabaseReference!
     var category: String!
 
-    let categories = ["Sports", "Chilling", "Game", "Movie", "Festival", "Party", "Theather", "Social", "Outdoor", "Water Activities", "Self care", "Running", "Music", "Send", "Nudes" ]
+    let categories = ["Sports", "Chilling", "Game", "Movie", "Festival", "Party", "Theather", "Social", "Outdoor", "Water Activities", "Self care", "Running", "Music", "Indoor sports", "Food", "Car", "Girl's Night", "Men's Night"]
     
     //MARK: - Pickerview
     
@@ -53,6 +54,8 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
 
     // Function to create activity when button pressed
     @IBAction func createActivty(_ sender: UIButton) {
+        
+        // Check which user is logged in
         let uid = Auth.auth().currentUser?.uid
         
         // Change format of the datepicker to String
@@ -62,6 +65,16 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         let stringDate = dateFormatter.string(from: date)
        
         // Send all data to Firebase
-        ref.child("Activities").child(uid!).setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!])
+        ref.child("Activities").child(uid!).childByAutoId().setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!])
+        
+        clearAll()
+    }
+    
+    // Function to clear the textfields
+    func clearAll() {
+        activityName.text = ""
+        maxParticipants.text = ""
+        locationActivity.text = ""
+        descriptionTextfield.text = ""
     }
 }

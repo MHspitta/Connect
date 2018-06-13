@@ -17,7 +17,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
     
-    
     //MARK: - Functions
     
     // Function to login
