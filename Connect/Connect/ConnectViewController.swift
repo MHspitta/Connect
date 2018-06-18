@@ -7,16 +7,36 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class ConnectViewController: UIViewController {
+    
+    //MARK: - Variables
+    
+    var activities: [Activity2] = []
+    var ref: DatabaseReference!
+    var refHandle: DatabaseHandle!
+    var currentActivity: Activity2!
     
     //MARK: - Outlets
     
     @IBOutlet weak var card: UIView!
     @IBOutlet weak var thumbImage: UIImageView!
+    @IBOutlet weak var activityLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    //MARK: - Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference()
+        fetchActivities()
+        
+        print(activities)
+        
+        resetCard()
     }
     
     //MARK: - Functions
@@ -51,7 +71,9 @@ class ConnectViewController: UIViewController {
                 UIView.animate(withDuration: 0.3, animations: {
                     card.center = CGPoint(x: card.center.x - 200, y: card.center.y + 75)
                     card.alpha = 0
-                })
+                }) { ( finished ) in
+                    self.resetCard()
+                }
                 return
                 
             } else if card.center.x > (view.frame.width - 75 ) {
@@ -60,7 +82,9 @@ class ConnectViewController: UIViewController {
                 UIView.animate(withDuration: 0.3, animations: {
                     card.center = CGPoint(x: card.center.x + 200, y: card.center.y + 75)
                     card.alpha = 0
-                })
+                }) { ( finished ) in
+                    self.resetCard()
+                }
                 return
             }
             
@@ -70,9 +94,6 @@ class ConnectViewController: UIViewController {
             })
         }
     }
-    @IBAction func reset(_ sender: UIButton) {
-        resetCard()
-    }
     
     // Function to reset the card
     func resetCard() {
@@ -80,6 +101,37 @@ class ConnectViewController: UIViewController {
             self.card.center = self.view.center
             self.thumbImage.alpha = 0
             self.card.alpha = 1
+        })
+//        nextActivity()
+        
+//        activityLabel.text = currentActivity.activity
+//        locationLabel.text = currentActivity.location
+//        dateLabel.text = currentActivity.date
+    }
+    
+    func nextActivity() {
+        currentActivity = activities.randomItem()!
+    }
+    
+    // Function to fetch all activities
+    func fetchActivities() {
+        
+        // Get snapshot of firebase data
+        refHandle = ref.child("Activities").observe(.value, with: { (snapshot) in
+            
+            if (snapshot.value as? [String:AnyObject]) != nil {
+                
+                var activityX: [Activity2] = []
+                
+                // Itereate trough the snapshot and save the data
+                for child in snapshot.children {
+                    let activity = Activity2(snapshot: child as! DataSnapshot)
+                    activityX.append(activity)
+                }
+                
+                self.activities = activityX
+            }
+            
         })
     }
 }

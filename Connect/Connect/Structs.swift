@@ -11,51 +11,23 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-////MARK: - Structs
-//
-//struct User {
-//    var username: String
-//    var name: String
-//    var password: String
-//    var bio: String?
-//    var age: Int?
-//    var interests: interestType
-//}
-//
-//enum interestType {
-//    case sport
-//    case games
-//    case party
-//    case music
-//    case chilling
-//    case culture
-//    case active
-//}
-//
-//struct Activity1: Codable {
-//    var id: String!
-//    var name: String!
-//    var ageCategory: String!
-//    var category: String!
-//    var endDate: String!
-//    var time: Double!
-//    var description: String?
-//    var participants: Int?
-//    var location: String?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id = "ID"
-//        case name = "TITEL"
-//        case ageCategory = "LEEFTIJDCLASSIFICATIE"
-//        case category = "ACTIVITEITSOORTEN"
-//        case endDate = "EIND_DATUM"
-//        case description = "BODY"
-//        case participants
-//        case location = "LOCATIETOELICHTING"
-//    }
-//}
-
 //MARK: - Structs
+
+struct User: Codable {
+    var name: String!
+    var age: String!
+    var location: String!
+    var mobile: String!
+    
+    init(snapshot: DataSnapshot) {
+        let snapshotValue = snapshot.value as! [String:AnyObject]
+        
+        age = snapshotValue["age"] as! String
+        location = snapshotValue["location"] as! String
+        mobile = snapshotValue["mobile"] as! String
+        name = snapshotValue["name"] as! String
+    }
+}
 
 // Struct for activities from Firebase
 struct Activity2: Codable {
@@ -65,6 +37,7 @@ struct Activity2: Codable {
     var location: String!
     var participants: String!
     var description: String!
+    var organisor: String!
     
     init(snapshot: DataSnapshot) {
         let snapshotValue = snapshot.value as! [String:AnyObject]
@@ -75,5 +48,6 @@ struct Activity2: Codable {
         location = snapshotValue["location"] as! String
         participants = snapshotValue["participants(max)"] as! String
         description = snapshotValue["description"] as! String
+//        organisor = snapshotValue["organisor"] as! String
     }
 }

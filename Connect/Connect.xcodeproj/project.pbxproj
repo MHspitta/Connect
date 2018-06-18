@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		33C5F1B7A61460853839B385 /* Pods_ConnectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C87A80F8232F8C3D6147E7B1 /* Pods_ConnectTests.framework */; };
+		4104981520D29CF6002D3B93 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4104981420D29CF6002D3B93 /* Extension.swift */; };
 		4139C47220D14EF20005F73E /* ActivityDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4139C47120D14EF20005F73E /* ActivityDetailViewController.swift */; };
 		4149E46E20CEA84800736212 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4149E46D20CEA84800736212 /* SignUpViewController.swift */; };
 		4149E47020CEAA2800736212 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4149E46F20CEAA2800736212 /* LoginViewController.swift */; };
 		4155555C20C940D700A1C2CF /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4155555B20C940D700A1C2CF /* ConnectViewController.swift */; };
 		41633A0020CFE0AE00A17EAF /* CreateActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416339FF20CFE0AE00A17EAF /* CreateActivityViewController.swift */; };
+		41A26AE120D7BC32008A6598 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A26AE020D7BC32008A6598 /* ProfileEditViewController.swift */; };
+		41A26AE320D7EE97008A6598 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A26AE220D7EE96008A6598 /* FriendsViewController.swift */; };
+		41A26AE520D7EEBA008A6598 /* FriendsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A26AE420D7EEBA008A6598 /* FriendsDetailViewController.swift */; };
 		41A40FE020CFD39100709312 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A40FDF20CFD39100709312 /* ProfileViewController.swift */; };
 		41B1240620C69C230008E343 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B1240520C69C230008E343 /* AppDelegate.swift */; };
 		41B1240B20C69C230008E343 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B1240920C69C230008E343 /* Main.storyboard */; };
@@ -48,11 +52,15 @@
 		1179DE6348546128DFD45FE1 /* Pods-ConnectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConnectTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConnectTests/Pods-ConnectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2ADB193C8AEB3409CBB77125 /* Pods-ConnectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConnectTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ConnectTests/Pods-ConnectTests.release.xcconfig"; sourceTree = "<group>"; };
 		340D0017E9B2F1507ADA7076 /* Pods-ConnectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConnectUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConnectUITests/Pods-ConnectUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		4104981420D29CF6002D3B93 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4139C47120D14EF20005F73E /* ActivityDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailViewController.swift; sourceTree = "<group>"; };
 		4149E46D20CEA84800736212 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		4149E46F20CEAA2800736212 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4155555B20C940D700A1C2CF /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
 		416339FF20CFE0AE00A17EAF /* CreateActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateActivityViewController.swift; sourceTree = "<group>"; };
+		41A26AE020D7BC32008A6598 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		41A26AE220D7EE96008A6598 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		41A26AE420D7EEBA008A6598 /* FriendsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsDetailViewController.swift; sourceTree = "<group>"; };
 		41A40FDF20CFD39100709312 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		41B1240220C69C230008E343 /* Connect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41B1240520C69C230008E343 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,19 +152,23 @@
 			isa = PBXGroup;
 			children = (
 				41B1240520C69C230008E343 /* AppDelegate.swift */,
-				41B1243320C6A4F00008E343 /* Structs.swift */,
 				41B1240920C69C230008E343 /* Main.storyboard */,
-				4155555B20C940D700A1C2CF /* ConnectViewController.swift */,
 				41B1240C20C69C2A0008E343 /* Assets.xcassets */,
 				41B1240E20C69C2A0008E343 /* LaunchScreen.storyboard */,
 				41B6F9F520CEC0890091AD35 /* GoogleService-Info.plist */,
 				41B1241120C69C2A0008E343 /* Info.plist */,
+				41B1243320C6A4F00008E343 /* Structs.swift */,
+				4104981420D29CF6002D3B93 /* Extension.swift */,
 				4149E46D20CEA84800736212 /* SignUpViewController.swift */,
 				4149E46F20CEAA2800736212 /* LoginViewController.swift */,
-				41A40FDF20CFD39100709312 /* ProfileViewController.swift */,
-				416339FF20CFE0AE00A17EAF /* CreateActivityViewController.swift */,
+				4155555B20C940D700A1C2CF /* ConnectViewController.swift */,
 				41FDAA8720D1279F00F79159 /* ActivitiesTableViewController.swift */,
+				416339FF20CFE0AE00A17EAF /* CreateActivityViewController.swift */,
 				4139C47120D14EF20005F73E /* ActivityDetailViewController.swift */,
+				41A40FDF20CFD39100709312 /* ProfileViewController.swift */,
+				41A26AE020D7BC32008A6598 /* ProfileEditViewController.swift */,
+				41A26AE220D7EE96008A6598 /* FriendsViewController.swift */,
+				41A26AE420D7EEBA008A6598 /* FriendsDetailViewController.swift */,
 			);
 			path = Connect;
 			sourceTree = "<group>";
@@ -410,11 +422,15 @@
 				41A40FE020CFD39100709312 /* ProfileViewController.swift in Sources */,
 				41FDAA8820D1279F00F79159 /* ActivitiesTableViewController.swift in Sources */,
 				4139C47220D14EF20005F73E /* ActivityDetailViewController.swift in Sources */,
+				41A26AE320D7EE97008A6598 /* FriendsViewController.swift in Sources */,
 				41B1243420C6A4F00008E343 /* Structs.swift in Sources */,
+				4104981520D29CF6002D3B93 /* Extension.swift in Sources */,
 				41B1240620C69C230008E343 /* AppDelegate.swift in Sources */,
+				41A26AE520D7EEBA008A6598 /* FriendsDetailViewController.swift in Sources */,
 				4149E46E20CEA84800736212 /* SignUpViewController.swift in Sources */,
 				4149E47020CEAA2800736212 /* LoginViewController.swift in Sources */,
 				4155555C20C940D700A1C2CF /* ConnectViewController.swift in Sources */,
+				41A26AE120D7BC32008A6598 /* ProfileEditViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

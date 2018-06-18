@@ -19,11 +19,9 @@ class ActivityDetailViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var descriptionTextField: UITextView!
-    
     @IBOutlet weak var button: UIButton!
     
     var activity: Activity2!
-    
     
     //MARK: - Overrides
     
@@ -38,9 +36,9 @@ class ActivityDetailViewController: UIViewController {
     // Function to update the detailview
     func updateUI() {
         activityName.text = activity.activity
-        organiserLabel.text = ""
+        organiserLabel.text = activity.organisor
         categoryLabel.text = activity.category
-        participantsTextView.text = ""
+        participantsTextView.text = activity.participants
         dateLabel.text = activity.date
         locationLabel.text = activity.location
         descriptionTextField.text = activity.description

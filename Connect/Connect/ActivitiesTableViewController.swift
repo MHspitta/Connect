@@ -23,7 +23,7 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
-        fetchActivities()
+//        fetchActivities()
     }
     
     // Set number of rows in section
@@ -71,7 +71,7 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
         let uid = Auth.auth().currentUser?.uid
         
         // Get snapshot of firebase data
-        refHandle = ref.child("Activities").child(uid!).observe(.value, with: { (snapshot) in
+        refHandle = ref.child("Activities").child(uid!).child("Created").observe(.value, with: { (snapshot) in
         
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
