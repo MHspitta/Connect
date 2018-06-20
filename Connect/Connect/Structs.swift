@@ -38,6 +38,7 @@ struct Activity2: Codable {
     var participants: String!
     var description: String!
     var organisor: String!
+    var creator: String!
     
     init(snapshot: DataSnapshot) {
         let snapshotValue = snapshot.value as! [String:AnyObject]
@@ -48,6 +49,7 @@ struct Activity2: Codable {
         location = snapshotValue["location"] as! String
         participants = snapshotValue["participants(max)"] as! String
         description = snapshotValue["description"] as! String
+        creator = snapshotValue["creator"] as! String
 //        organisor = snapshotValue["organisor"] as! String
     }
 }

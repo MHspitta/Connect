@@ -139,24 +139,16 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
         let stringDate = dateFormatter.string(from: date)
         
-        //        // Send all data to Firebase
-        //        ref.child("Activities").child(uid!).child("Created").childByAutoId().setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : ""])
-        
-        // Get snapshot of firebase data
-        refHandle = ref.child("Users").child(uid!).observe(.value, with: { (snapshot) in
-            
-            // Check if snapshot isn't nil
-            if (snapshot.value as? [String:AnyObject]) != nil {
-                
-                let user = User(snapshot: snapshot)
-                
-                self.userName = user.name
-            }
-        })
+//        // Send all data to Firebase
+//        ref.child("Activities").child(uid!).child("Created").childByAutoId().setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : ""])
+    
         
         // Send all data to Firebase
         ref.child("Activities").childByAutoId().setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : "", "creator" : uid, "organisor" : userName])
     }
+    
+    
+    
     
 //    // Function to retrieve username (organisor)
 //    func getUserName() {

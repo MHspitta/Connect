@@ -14,6 +14,7 @@ import FirebaseStorage
 class ProfileEditViewController: UIViewController {
     
     var imagePicker: UIImagePickerController!
+    let uid = Auth.auth().currentUser?.uid
     
     var ref: DatabaseReference!
     
@@ -44,6 +45,7 @@ class ProfileEditViewController: UIViewController {
         self.present(imagePicker, animated: true, completion: nil)
     }
     
+    // Button save pressed
     @IBAction func saveChanges(_ sender: UIButton) {
         uploadData()
         messageLabel.text = "Profile succesfully updated!"
@@ -59,40 +61,47 @@ class ProfileEditViewController: UIViewController {
         guard let age = ageInput.text else { return }
         guard let location = locationInput.text else { return }
         guard let mobile = mobileInput.text else { return }
-        //        guard let image = imageView.image else { return }
+        guard let image = imageView.image else { return }
         
         // Check which user is logged in
         let uid = Auth.auth().currentUser?.uid
     
         // Send all data to Firebase
         ref.child("Users").child(uid!).setValue(["name" : name, "age" : age, "location" : location, "mobile" : mobile])
+        
+        uploadImagePic(img1: image)
+        
+        ref.child("Users").child(uid!).child("friends").setValue(["uid" : "name"])
+        ref.child("Users").child(uid!).child("participatingActivities").setValue(["uid" : "activity"])
+    }
+    
+    
+    func uploadImagePic(img1: UIImage) {
+        var data = NSData()
+        data = UIImageJPEGRepresentation(img1, 0.75)! as NSData
+        
+        // set upload path
+        let filePath = "\(uid!).jpg" // path where you wanted to store img in storage
+        
+        let storageRef = Storage.storage().reference()
+        
+        storageRef.child(filePath).putData(data as Data)
+        
     }
     
     
     
+    
 //    // Function to upload the image to Firebase
-//    func uploadProfileImage(_ image:UIImage, completion: @escaping ((_ url:URL?)->())) {
+//    func uploadProfileImage(_ image:UIImage, completion: @escaping ((_ url: URL?)->())) {
 //        guard let uid = Auth.auth().currentUser?.uid else { return }
 //        let storageRef = Storage.storage().reference().child("user/\(uid)")
 //
 //        guard let imageData = UIImageJPEGRepresentation(image, 0.75) else { return }
 //
-//        let metaData = Data()
-//        let riversRef = storageRef.child("images/rivers.jpg")
+//        let riversRef = storageRef.child("profile/\(uid).jpg")
+//        riversRef.putData(imageData)
 //
-//        storageRef.putData(imageData, metadata: metaData) { metaData, error in
-//            if error == nil, metaData != nil {
-//                if let url = metaData?.downloadURL() {
-//                    comletion(url)
-//                } else {
-//                    completion(nil)
-//                }
-//                // succes!
-//            } else {
-//                // failed
-//                completion(nil)
-//            }
-//        }
 //    }
     
 }

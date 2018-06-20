@@ -25,7 +25,8 @@ class ProfileViewController: UIViewController {
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
     var users: User!
-    
+    let uid = Auth.auth().currentUser?.uid
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
@@ -37,21 +38,32 @@ class ProfileViewController: UIViewController {
     // Function to log user out from Firebase
     @IBAction func logOut(_ sender: UIButton) {
         try! Auth.auth().signOut()
-        performSegue(withIdentifier: "logOutSegue", sender: self)
+    }
+    
+    func fetchImage() {
+        // set download path
+        let filePath = "gs://connect-e83a4.appspot.com/\(uid!).jpg"
+        
+        let storageRef = Storage.storage().reference(forURL: filePath)
+        
+        // Download the data, assuming a max size of 1MB
+        storageRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) -> Void in
+            
+            if let dataUnwrapped = data {
+                self.imageView.image = UIImage(data: dataUnwrapped)
+            }
+        }
     }
     
     // Function to fetch user data from firebase
     func fetchUser() {
-        
-        // Current user logged in
-        let uid = Auth.auth().currentUser?.uid
         
         // Get snapshot of firebase data
         refHandle = ref.child("Users").child(uid!).observe(.value, with: { (snapshot) in
             
             // Check if snapshot isn't nil
             if (snapshot.value as? [String:AnyObject]) != nil {
-               
+                
                 let user = User(snapshot: snapshot)
                 
                 self.nameLabel.text = user.name
@@ -59,6 +71,7 @@ class ProfileViewController: UIViewController {
                 self.locationLabel.text = user.location
                 self.mobileLabel.text = user.mobile
                 
+                self.fetchImage()
             }
         })
     }

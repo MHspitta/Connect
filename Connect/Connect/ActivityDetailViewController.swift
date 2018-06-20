@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class ActivityDetailViewController: UIViewController {
+    
+    var ref: DatabaseReference!
+    var refHandle: DatabaseHandle!
     
     //MARK: - Outlets
     
@@ -19,7 +24,7 @@ class ActivityDetailViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var descriptionTextField: UITextView!
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var mobileLabel: UILabel!
     
     var activity: Activity2!
     
@@ -27,8 +32,8 @@ class ActivityDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference()
         updateUI()
-        // Do any additional setup after loading the view.
     }
     
     //MARK: - Functions
@@ -36,12 +41,27 @@ class ActivityDetailViewController: UIViewController {
     // Function to update the detailview
     func updateUI() {
         activityName.text = activity.activity
-        organiserLabel.text = activity.organisor
         categoryLabel.text = activity.category
         participantsTextView.text = activity.participants
         dateLabel.text = activity.date
         locationLabel.text = activity.location
         descriptionTextField.text = activity.description
+        getCreatorData()
     }
-
+    
+    // Function to get the creators name
+    func getCreatorData() {
+        let id = activity.creator
+        
+        refHandle = ref.child("Users").child(id!).observe(.value, with: { (snapshot) in
+            
+            // Check if snapshot isn't nil
+            if (snapshot.value as? [String:AnyObject]) != nil {
+                
+                let user = User(snapshot: snapshot)
+                self.organiserLabel.text = user.name
+                self.mobileLabel.text = user.mobile
+            }
+        })
+    }
 }

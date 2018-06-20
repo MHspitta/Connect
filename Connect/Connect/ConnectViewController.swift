@@ -18,6 +18,8 @@ class ConnectViewController: UIViewController {
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
     var currentActivity: Activity2!
+    let uid = Auth.auth().currentUser?.uid
+    var keyArray: [String] = []
     
     //MARK: - Outlets
     
@@ -33,10 +35,6 @@ class ConnectViewController: UIViewController {
         super.viewDidLoad()
         ref = Database.database().reference()
         fetchActivities()
-        
-        print(activities)
-        
-        resetCard()
     }
     
     //MARK: - Functions
@@ -102,15 +100,34 @@ class ConnectViewController: UIViewController {
             self.thumbImage.alpha = 0
             self.card.alpha = 1
         })
-//        nextActivity()
+        nextActivity()
         
-//        activityLabel.text = currentActivity.activity
-//        locationLabel.text = currentActivity.location
-//        dateLabel.text = currentActivity.date
+        activityLabel.text = currentActivity.activity
+        locationLabel.text = currentActivity.location
+        dateLabel.text = currentActivity.date
     }
     
     func nextActivity() {
-        currentActivity = activities.randomItem()!
+        currentActivity = activities.randomItem()
+    }
+    
+    func likeActivity() {
+        
+        // add activitiy to User database
+        ref.child("Users").child(uid!).child("participatingActivities").childByAutoId().setValue(["ActivityId"])
+        
+        //add user uid to Acitivity database
+//        ref.child("Activities").
+    }
+    
+    func getAllKeys() {
+        ref?.child("Activities").observeSingleEvent(of: .value, with: { (snapshot) in
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                let key = snap.key
+                self.keyArray.append(key)
+            }
+        })
     }
     
     // Function to fetch all activities
@@ -130,6 +147,9 @@ class ConnectViewController: UIViewController {
                 }
                 
                 self.activities = activityX
+                
+                self.resetCard()
+                
             }
             
         })

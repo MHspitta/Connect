@@ -43,6 +43,10 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @IBAction func unwindSegue(_ sender: UIStoryboardSegue) {
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()

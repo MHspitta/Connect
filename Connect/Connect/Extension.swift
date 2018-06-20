@@ -9,7 +9,9 @@
 import Foundation
 import UIKit
 
-//MARK: - Extension
+//MARK: - Extensions
+
+// Extension to hide keyboard
 extension UIViewController {
     
     // Function to hide keyboard
@@ -41,10 +43,24 @@ extension ProfileEditViewController: UIImagePickerControllerDelegate, UINavigati
     }
 }
 
+// Extension to random pick element from array
 extension Array {
     func randomItem() -> Element? {
         if isEmpty { return nil }
         let index = Int(arc4random_uniform(UInt32(self.count)))
         return self[index]
+    }
+}
+
+// Extension to shuffle arrays
+extension Array
+{
+    /** Randomizes the order of an array's elements. */
+    mutating func shuffle()
+    {
+        for _ in 0..<10
+        {
+            sort { (_,_) in arc4random() < arc4random() }
+        }
     }
 }
