@@ -81,6 +81,7 @@ class ConnectViewController: UIViewController {
                     card.center = CGPoint(x: card.center.x + 200, y: card.center.y + 75)
                     card.alpha = 0
                 }) { ( finished ) in
+                    self.likeActivity()
                     self.resetCard()
                 }
                 return
@@ -95,39 +96,29 @@ class ConnectViewController: UIViewController {
     
     // Function to reset the card
     func resetCard() {
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             self.card.center = self.view.center
             self.thumbImage.alpha = 0
             self.card.alpha = 1
         })
-        nextActivity()
+        randomActivity()
         
         activityLabel.text = currentActivity.activity
         locationLabel.text = currentActivity.location
         dateLabel.text = currentActivity.date
     }
     
-    func nextActivity() {
+    func randomActivity() {
         currentActivity = activities.randomItem()
     }
     
     func likeActivity() {
         
-        // add activitiy to User database
-        ref.child("Users").child(uid!).child("participatingActivities").childByAutoId().setValue(["ActivityId"])
+        // Add activitiy to User database
+        ref.child("Users").child(uid!).child("participatingActivities").childByAutoId().setValue(["id" : currentActivity.activityID])
         
-        //add user uid to Acitivity database
-//        ref.child("Activities").
-    }
-    
-    func getAllKeys() {
-        ref?.child("Activities").observeSingleEvent(of: .value, with: { (snapshot) in
-            for child in snapshot.children {
-                let snap = child as! DataSnapshot
-                let key = snap.key
-                self.keyArray.append(key)
-            }
-        })
+        // Add user uid to Acitivity database
+        ref.child("Activities").child(currentActivity.activityID).child("participating(uid)").childByAutoId().setValue(["id" : uid])
     }
     
     // Function to fetch all activities
@@ -149,9 +140,7 @@ class ConnectViewController: UIViewController {
                 self.activities = activityX
                 
                 self.resetCard()
-                
             }
-            
         })
     }
 }

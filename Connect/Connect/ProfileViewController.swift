@@ -26,11 +26,24 @@ class ProfileViewController: UIViewController {
     var refHandle: DatabaseHandle!
     var users: User!
     let uid = Auth.auth().currentUser?.uid
-        
+    var userData: [String] = []
+    var profileImage: UIImage?
+    
+    //MARK: - Overrides
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
         fetchUser()
+    }
+    
+    // Function to push over to menu detail table
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editSegue" {
+            let profileEditViewController = segue.destination as! ProfileEditViewController
+            profileEditViewController.userData = userData
+            profileEditViewController.profileImage = profileImage
+        }
     }
     
     //MARK: - Functions
@@ -40,6 +53,7 @@ class ProfileViewController: UIViewController {
         try! Auth.auth().signOut()
     }
     
+    // Function to fetch the image from firebase
     func fetchImage() {
         // set download path
         let filePath = "gs://connect-e83a4.appspot.com/\(uid!).jpg"
@@ -51,8 +65,22 @@ class ProfileViewController: UIViewController {
             
             if let dataUnwrapped = data {
                 self.imageView.image = UIImage(data: dataUnwrapped)
+            } else {
+                self.imageView.image = #imageLiteral(resourceName: "blank-profile-picture-973460_960_720")
             }
+            
+            self.fillUserData()
         }
+    }
+    
+    // Function fill userData
+    func fillUserData() {
+        self.userData.append(self.nameLabel.text!)
+        self.userData.append(self.ageLabel.text!)
+        self.userData.append(self.locationLabel.text!)
+        self.userData.append(self.mobileLabel.text!)
+        
+        self.profileImage = self.imageView.image
     }
     
     // Function to fetch user data from firebase
@@ -72,6 +100,8 @@ class ProfileViewController: UIViewController {
                 self.mobileLabel.text = user.mobile
                 
                 self.fetchImage()
+                
+                
             }
         })
     }

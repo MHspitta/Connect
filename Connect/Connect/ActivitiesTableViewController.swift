@@ -12,6 +12,8 @@ import FirebaseDatabase
 
 class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    //MARK: - Outlets
+    
     @IBOutlet weak var tableview: UITableView!
     
     //MARK: - Variables
@@ -25,6 +27,10 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     
     // Participating activities
     var partActivities: [Activity2] = []
+    
+    var allActivities: [[Activity2]] = []
+    
+    var idArray: [Id] = []
     
     // Current user logged in
     let uid = Auth.auth().currentUser?.uid
@@ -48,15 +54,23 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     
     //MARK: - Functions
     
+    // Set number of sections
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return partActivities.count
+    }
+    
     // Set number of rows in section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activities.count
+//        return allActivities[section].count
+        return partActivities.count
     }
     
     // Update the tableview
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "selfActivities", for: indexPath)
-        let selfActivities = activities[indexPath.row]
+//        let cellText = allActivities[indexPath.section][indexPath.row]
+        
+        let selfActivities = partActivities[indexPath.row]
         
         // Update textlabel en detail label
         cell.textLabel?.text = selfActivities.activity
@@ -77,8 +91,7 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
         return ""
     }
     
-    
-    // Function to delete to do lists
+    // Function to delete activity
     func tableView(_ tableView: UITableView, commit
         editingStyle: UITableViewCellEditingStyle, forRowAt indexPath:
         IndexPath) {
@@ -106,7 +119,7 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
         })
     }
     
-    // Function to swipe a to do list
+    // Function to swipe a activity
     func tableView(_ tableView: UITableView, canEditRowAt
         indexPath: IndexPath) -> Bool {
         return true
@@ -131,23 +144,44 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
                         activityX.append(activity)
                     }
                 }
-            
+                
                 self.activities = activityX
+                
+                self.allActivities.append(self.activities)
+                
+                self.fetchActivityId()
                 
                 DispatchQueue.main.async {
                     self.tableview.reloadData()
                 }
-                
             }
-            
         })
     }
     
     // Function to fetch all activities that user participate
-    func fetchActivities2() {
-        
+    func fetchActivityId() {
+
         // Get snapshot of firebase data
-        refHandle = ref.child("Users").child("activitiesParticipating").observe(.value, with: { (snapshot) in
+        refHandle = ref.child("Users").child(uid!).child("participatingActivities").observe(.value, with: { (snapshot) in
+            
+            if (snapshot.value as? [String:AnyObject]) != nil {
+                var activityId: Id!
+                
+                for child in snapshot.children {
+                    
+                    activityId = Id(snapshot: child as! DataSnapshot)
+                    
+                    self.idArray.append(activityId)
+                }
+                self.fetchPartActivities()
+            }
+        })
+    }
+    
+    // Function to fetch all participating activities
+    func fetchPartActivities() {
+        
+        refHandle = ref.child("Activities").observe(.value , with: { ( snapshot) in
             
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
@@ -156,7 +190,20 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
                 // Itereate trough the snapshot and save the data
                 for child in snapshot.children {
                     let activity = Activity2(snapshot: child as! DataSnapshot)
-                    activityX.append(activity)
+                    
+                    for id in self.idArray {
+                        
+                        if id.id == activity.activityID!{
+                            
+                            for i in activityX {
+                                
+                                if i.activityID != activity.activityID {
+                                    activityX.append(activity)
+                                }
+                            }
+                            
+                        }
+                    }
                 }
                 
                 self.partActivities = activityX

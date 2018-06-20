@@ -20,6 +20,16 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordTextCheck: UITextField!
     @IBOutlet weak var succesMessage: UILabel!
     
+    //MARK: - Overrides
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+        succesMessage.text = ""
+    }
+    
+    //MARK: - Functions
+    
     // Function to create new account
     @IBAction func CreateAccount(_ sender: UIButton) {
         
@@ -49,14 +59,6 @@ class SignUpViewController: UIViewController {
         }
         clearAll()
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
-        succesMessage.text = ""
-    }
-    
-    //MARK: - Functions
     
     // Function to clear the password inputs
     func clearAll() {

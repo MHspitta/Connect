@@ -12,8 +12,11 @@ import FirebaseDatabase
 
 class ActivityDetailViewController: UIViewController {
     
+    //MARK: - Variables
+    
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
+    var activity: Activity2!
     
     //MARK: - Outlets
     
@@ -25,8 +28,6 @@ class ActivityDetailViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var descriptionTextField: UITextView!
     @IBOutlet weak var mobileLabel: UILabel!
-    
-    var activity: Activity2!
     
     //MARK: - Overrides
     

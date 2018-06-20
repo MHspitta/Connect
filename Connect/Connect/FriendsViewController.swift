@@ -11,15 +11,22 @@ import Firebase
 import FirebaseDatabase
 
 class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
+    //MARK: - Outlets
+    
     @IBOutlet weak var tableview: UITableView!
+    
+    //MARK: - Variables
     
     var ref: DatabaseReference!
     var refHandle: UInt!
     var users: [User] = []
+    var userImage: UIImage!
     
     // Current user logged in
     let uid = Auth.auth().currentUser?.uid
+    
+    //MARK: - Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,13 +34,13 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         fetchUsers()
     }
     
-    
-    // Action segue to go to the friendsDetailViewcontroller
+    // Action segue to go to the friendsDetailViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "friendsDetailSegue" {
             let friendsDetailViewController = segue.destination as! FriendsDetailViewController
             let index = tableview.indexPathForSelectedRow!.row
             friendsDetailViewController.friend = users[index]
+            friendsDetailViewController.userImage = userImage
         }
     }
     
@@ -62,6 +69,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    // Function to fetch all users
     func fetchUsers() {
         
         // Get snapshot of firebase data
@@ -78,7 +86,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
                 
                 self.users = usersX
-                
+            
                 DispatchQueue.main.async {
                     self.tableview.reloadData()
                 }

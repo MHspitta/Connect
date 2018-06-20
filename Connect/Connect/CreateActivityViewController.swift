@@ -45,7 +45,6 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.hideKeyboardWhenTappedAround()
         registerForKeyboardNotifications()
         
-        imagePicker.backgroundColor = UIColor.lightGray
     }
 
     //MARK: - Functions
@@ -82,19 +81,6 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
     }
-
-    // Function to pick image from library
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        imagePicker.image = image
-        imagePicker.contentMode = .scaleAspectFill
-        
-        dismiss(animated: true, completion: nil)
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -105,7 +91,7 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         present(controller, animated: true, completion: nil)
     }
     
-    //MARK: - Pickerview
+    //MARK: - Pickerview Functions
     
     // Functions for pickerview
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -124,6 +110,21 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         category = categories[row]
     }
     
+    // Function to pick image from library
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        imagePicker.image = image
+        imagePicker.contentMode = .scaleAspectFill
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: - Functions
+    
     // Function to create activity when button pressed
     @IBAction func createActivty(_ sender: UIButton) {
         uploadData()
@@ -139,31 +140,12 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
         let stringDate = dateFormatter.string(from: date)
         
-//        // Send all data to Firebase
-//        ref.child("Activities").child(uid!).child("Created").childByAutoId().setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : ""])
-    
-        
         // Send all data to Firebase
-        ref.child("Activities").childByAutoId().setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : "", "creator" : uid, "organisor" : userName])
+        let newRef = ref.child("Activities").childByAutoId()
+        let autoID = newRef.key
+    
+        newRef.setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : uid, "creator" : uid, "organisor" : userName, "activityID" : autoID])
     }
-    
-    
-    
-    
-//    // Function to retrieve username (organisor)
-//    func getUserName() {
-//        // Get snapshot of firebase data
-//        refHandle = ref.child("Users").child(uid!).observe(.value, with: { (snapshot) in
-//            
-//            // Check if snapshot isn't nil
-//            if (snapshot.value as? [String:AnyObject]) != nil {
-//                
-//                let user = User(snapshot: snapshot)
-//    
-//                self.userName = user.name
-//            }
-//        })
-//    }
     
     // Function to clear the textfields
     func clearAll() {

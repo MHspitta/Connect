@@ -53,14 +53,12 @@ extension Array {
 }
 
 // Extension to shuffle arrays
-extension Array
-{
-    /** Randomizes the order of an array's elements. */
-    mutating func shuffle()
-    {
-        for _ in 0..<10
-        {
+extension Array {
+    mutating func shuffle() {
+        for _ in indices {
             sort { (_,_) in arc4random() < arc4random() }
         }
     }
 }
+
+

@@ -12,23 +12,31 @@ import Firebase
 
 class FriendsDetailViewController: UIViewController {
 
+    //MARK: - Outlets
+    
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var mobileLabel: UILabel!
     
+    //MARK: - Variables
     
     var friend: User!
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
-    var users: User!
     let uid = Auth.auth().currentUser?.uid
+    var userImage: UIImage!
+    
+    //MARK: - Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+        fetchImage()
     }
+    
+    //MARK: - Functions
     
     func updateUI() {
         nameLabel.text = friend.name
@@ -39,7 +47,7 @@ class FriendsDetailViewController: UIViewController {
     
     func fetchImage() {
         // set download path
-        let filePath = "gs://connect-e83a4.appspot.com/\(uid!).jpg"
+        let filePath = "gs://connect-e83a4.appspot.com/\(friend.uid!).jpg"
         
         let storageRef = Storage.storage().reference(forURL: filePath)
         
