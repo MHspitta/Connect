@@ -20,6 +20,7 @@ class ConnectViewController: UIViewController {
     var currentActivity: Activity2!
     let uid = Auth.auth().currentUser?.uid
     var keyArray: [String] = []
+    var numbers: Int = 0
     
     //MARK: - Outlets
     
@@ -28,6 +29,8 @@ class ConnectViewController: UIViewController {
     @IBOutlet weak var activityLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var cardImage: UIImageView!
+    @IBOutlet weak var participantsLabel: UILabel!
     
     //MARK: - Overrides
     
@@ -102,18 +105,74 @@ class ConnectViewController: UIViewController {
             self.card.alpha = 1
         })
         randomActivity()
+        chooseImage()
         
         activityLabel.text = currentActivity.activity
         locationLabel.text = currentActivity.location
         dateLabel.text = currentActivity.date
+        participantsLabel.text = currentActivity.participants
+    }
+
+    func chooseImage() {
+        switch currentActivity.category {
+        case "Outdoor Sports":
+            self.cardImage.image = #imageLiteral(resourceName: "Bike Rider Top Mountain iPhone 6 Wallpaper")
+        case "Chilling":
+            self.cardImage.image = #imageLiteral(resourceName: "Chilling")
+        case "Game":
+            self.cardImage.image = #imageLiteral(resourceName: "gaming")
+        case "Movie":
+            self.cardImage.image = #imageLiteral(resourceName: "movie")
+        case "Football":
+            self.cardImage.image = #imageLiteral(resourceName: "football")
+        case "Festival":
+            self.cardImage.image = #imageLiteral(resourceName: "festival")
+        case "Party":
+            self.cardImage.image = #imageLiteral(resourceName: "party-1")
+        case "Theater":
+            self.cardImage.image = #imageLiteral(resourceName: "theater")
+        case "Extreme sports":
+            self.cardImage.image = #imageLiteral(resourceName: "Extreme")
+        case "Water Activities":
+            self.cardImage.image = #imageLiteral(resourceName: "water")
+        case "Self care":
+            self.cardImage.image = #imageLiteral(resourceName: "selfCare")
+        case "Running":
+            self.cardImage.image = #imageLiteral(resourceName: "running")
+        case "Music":
+            self.cardImage.image = #imageLiteral(resourceName: "music")
+        case "Indoor Sports":
+            self.cardImage.image = #imageLiteral(resourceName: "football")
+        case "Food":
+            self.cardImage.image = #imageLiteral(resourceName: "food")
+        case "Car":
+            self.cardImage.image = #imageLiteral(resourceName: "car")
+        case "Girl's Night":
+            self.cardImage.image = #imageLiteral(resourceName: "girlsNight")
+        case "Men's Night":
+            self.cardImage.image = #imageLiteral(resourceName: "mensNight")
+        default:
+            self.cardImage.image = #imageLiteral(resourceName: "Swimming")
+        }
     }
     
+    // Function to select random activity and remove this
     func randomActivity() {
-        currentActivity = activities.randomItem()
+        let x = arc4random_uniform(UInt32(numbers))
+        
+        if Int(x) == 1 {
+            activityLabel.text = "Currently no activities available"
+            locationLabel.text = ""
+            dateLabel.text = ""
+            participantsLabel.text = ""
+        } else {
+            currentActivity = activities.remove(at: Int(x))
+            self.numbers = self.numbers - 1
+        }
     }
     
+    // Function to upload all data to firebase when activity is liked
     func likeActivity() {
-        
         // Add activitiy to User database
         ref.child("Users").child(uid!).child("participatingActivities").childByAutoId().setValue(["id" : currentActivity.activityID])
         
@@ -125,7 +184,7 @@ class ConnectViewController: UIViewController {
     func fetchActivities() {
         
         // Get snapshot of firebase data
-        refHandle = ref.child("Activities").observe(.value, with: { (snapshot) in
+        ref?.child("Activities").observeSingleEvent(of: .value, with: { (snapshot) in
             
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
@@ -135,10 +194,9 @@ class ConnectViewController: UIViewController {
                 for child in snapshot.children {
                     let activity = Activity2(snapshot: child as! DataSnapshot)
                     activityX.append(activity)
+                    self.numbers = self.numbers + 1
                 }
-                
                 self.activities = activityX
-                
                 self.resetCard()
             }
         })

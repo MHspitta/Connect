@@ -34,7 +34,7 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
     // Check which user is logged in
     let uid = Auth.auth().currentUser?.uid
 
-    let categories = ["Sports", "Chilling", "Game", "Movie", "Festival", "Party", "Theather", "Social", "Outdoor", "Water Activities", "Self care", "Running", "Music", "Indoor sports", "Food", "Car", "Girl's Night", "Men's Night"]
+    let categories = ["Outdoor Sports", "Swimming", "Chilling", "Game", "Movie", "Football", "Festival", "Party", "Theather", "Extreme sports", "Water Activities", "Self care", "Running", "Music", "Indoor Sports", "Food", "Car", "Girl's Night", "Men's Night"]
     
     //MARK: - Overrides
     
@@ -44,7 +44,6 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         self.hideKeyboardWhenTappedAround()
         registerForKeyboardNotifications()
-        
     }
 
     //MARK: - Functions

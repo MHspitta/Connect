@@ -21,18 +21,11 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     var ref: DatabaseReference!
     var refHandle: UInt!
     var keyArray: [String] = []
-    
-    // Self created activities
     var activities: [Activity2] = []
-    
-    // Participating activities
     var partActivities: [Activity2] = []
-    
-    var allActivities: [[Activity2]] = []
-    
+    var allActivities = [[Activity2]]()
+    let sections = ["My created activities", "Participating activities", "Nieuw"]
     var idArray: [Id] = []
-    
-    // Current user logged in
     let uid = Auth.auth().currentUser?.uid
     
     //MARK: - Overrides
@@ -47,48 +40,42 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "selfActivityDetail" {
             let activityDetailViewController = segue.destination as! ActivityDetailViewController
-            let index = tableview.indexPathForSelectedRow!.row
-            activityDetailViewController.activity = activities[index]
+//            let index = tableview.indexPathForSelectedRow!.row
+//            activityDetailViewController.activity = activities[index]
+            
+            if let indexPath = self.tableview.indexPathForSelectedRow {
+                let index = allActivities[indexPath.section][indexPath.row]
+                activityDetailViewController.activity = index
+            }
         }
     }
     
     //MARK: - Functions
     
     // Set number of sections
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return partActivities.count
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return allActivities.count
     }
     
     // Set number of rows in section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return allActivities[section].count
-        return partActivities.count
+        return allActivities[section].count
     }
     
     // Update the tableview
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "selfActivities", for: indexPath)
-//        let cellText = allActivities[indexPath.section][indexPath.row]
-        
-        let selfActivities = partActivities[indexPath.row]
+        let cellText = self.allActivities[indexPath.section][indexPath.row]
         
         // Update textlabel en detail label
-        cell.textLabel?.text = selfActivities.activity
+        cell.textLabel?.text = cellText.activity
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "My created activities"
-        }
-        if section == 1 {
-            return "Upcoming activities"
-        }
-        if section == 2 {
-            return "Liked activities"
-        }
-        return ""
+        print(section)
+        return self.sections[section]
     }
     
     // Function to delete activity
@@ -134,6 +121,7 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
                 var activityX: [Activity2] = []
+                self.allActivities = []
                 
                 // Itereate trough the snapshot and save the data
                 for child in snapshot.children {
@@ -144,11 +132,8 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
                         activityX.append(activity)
                     }
                 }
-                
                 self.activities = activityX
-                
-                self.allActivities.append(self.activities)
-                
+                self.allActivities.append(activityX)
                 self.fetchActivityId()
                 
                 DispatchQueue.main.async {
@@ -165,14 +150,15 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
         refHandle = ref.child("Users").child(uid!).child("participatingActivities").observe(.value, with: { (snapshot) in
             
             if (snapshot.value as? [String:AnyObject]) != nil {
-                var activityId: Id!
+                var idX: [Id] = []
                 
                 for child in snapshot.children {
                     
-                    activityId = Id(snapshot: child as! DataSnapshot)
+                    let activityId = Id(snapshot: child as! DataSnapshot)
                     
-                    self.idArray.append(activityId)
+                    idX.append(activityId)
                 }
+                self.idArray = idX
                 self.fetchPartActivities()
             }
         })
@@ -186,28 +172,23 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
                 var activityX: [Activity2] = []
+                self.allActivities.append([])
                 
                 // Itereate trough the snapshot and save the data
                 for child in snapshot.children {
                     let activity = Activity2(snapshot: child as! DataSnapshot)
                     
                     for id in self.idArray {
-                        
                         if id.id == activity.activityID!{
                             
-                            for i in activityX {
-                                
-                                if i.activityID != activity.activityID {
-                                    activityX.append(activity)
-                                }
-                            }
-                            
+                            activityX.append(activity)
                         }
                     }
                 }
-                
                 self.partActivities = activityX
-                
+                self.allActivities[1] = activityX
+                self.idArray = []
+
                 DispatchQueue.main.async {
                     self.tableview.reloadData()
                 }

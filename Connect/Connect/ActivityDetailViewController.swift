@@ -17,6 +17,8 @@ class ActivityDetailViewController: UIViewController {
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
     var activity: Activity2!
+    var idArray: [Id] = []
+    var counter: Int!
     
     //MARK: - Outlets
     
@@ -28,6 +30,8 @@ class ActivityDetailViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var descriptionTextField: UITextView!
     @IBOutlet weak var mobileLabel: UILabel!
+    @IBOutlet weak var counterLabel: UILabel!
+    @IBOutlet weak var background: UIImageView!
     
     //MARK: - Overrides
     
@@ -43,11 +47,55 @@ class ActivityDetailViewController: UIViewController {
     func updateUI() {
         activityName.text = activity.activity
         categoryLabel.text = activity.category
-        participantsTextView.text = activity.participants
         dateLabel.text = activity.date
         locationLabel.text = activity.location
         descriptionTextField.text = activity.description
         getCreatorData()
+        getPartIds()
+        changeBackground()
+    }
+    
+    func changeBackground() {
+        switch activity.category {
+        case "Outdoor Sports":
+            self.background.image = #imageLiteral(resourceName: "Bike Rider Top Mountain iPhone 6 Wallpaper")
+        case "Chilling":
+            self.background.image = #imageLiteral(resourceName: "Chilling")
+        case "Game":
+            self.background.image = #imageLiteral(resourceName: "gaming")
+        case "Movie":
+            self.background.image = #imageLiteral(resourceName: "movie")
+        case "Football":
+            self.background.image = #imageLiteral(resourceName: "football")
+        case "Festival":
+            self.background.image = #imageLiteral(resourceName: "festival")
+        case "Party":
+            self.background.image = #imageLiteral(resourceName: "party-1")
+        case "Theater":
+            self.background.image = #imageLiteral(resourceName: "theater")
+        case "Extreme sports":
+            self.background.image = #imageLiteral(resourceName: "Extreme")
+        case "Water Activities":
+            self.background.image = #imageLiteral(resourceName: "water")
+        case "Self care":
+            self.background.image = #imageLiteral(resourceName: "selfCare")
+        case "Running":
+            self.background.image = #imageLiteral(resourceName: "running")
+        case "Music":
+            self.background.image = #imageLiteral(resourceName: "music")
+        case "Indoor Sports":
+            self.background.image = #imageLiteral(resourceName: "indoor ")
+        case "Food":
+            self.background.image = #imageLiteral(resourceName: "food")
+        case "Car":
+            self.background.image = #imageLiteral(resourceName: "car")
+        case "Girl's Night":
+            self.background.image = #imageLiteral(resourceName: "girlsNight")
+        case "Men's Night":
+            self.background.image = #imageLiteral(resourceName: "mensNight")
+        default:
+            self.background.image = #imageLiteral(resourceName: "Swimming")
+        }
     }
     
     // Function to get the creators name
@@ -62,6 +110,54 @@ class ActivityDetailViewController: UIViewController {
                 let user = User(snapshot: snapshot)
                 self.organiserLabel.text = user.name
                 self.mobileLabel.text = user.mobile
+            }
+        })
+    }
+    
+    // Function to get the participants uid
+    func getPartIds() {
+        
+        // Get snapshot of firebase data
+        refHandle = ref.child("Activities").child(activity.activityID).child("participating(uid)").observe(.value, with: { (snapshot) in
+            
+            if (snapshot.value as? [String:AnyObject]) != nil {
+                var idX: [Id] = []
+                
+                for child in snapshot.children {
+                    
+                    let partId = Id(snapshot: child as! DataSnapshot)
+                    
+                    idX.append(partId)
+                }
+                self.idArray = idX
+                self.getPartName()
+            }
+        })
+    }
+    
+    func getPartName() {
+        refHandle = ref.child("Users").observe(.value , with: { ( snapshot) in
+            
+            self.counter = 0
+            
+            if (snapshot.value as? [String:AnyObject]) != nil {
+                for child in snapshot.children {
+                    let user = User(snapshot: child as! DataSnapshot)
+                    
+                    for id in self.idArray {
+                        if id.id == user.uid! {
+                            
+                            self.participantsTextView.text.append(user.name + ", ")
+                            self.counter = self.counter + 1
+                            if self.counter! < Int(self.activity.participants)! {
+                                self.counterLabel.text = "\(self.counter!)/\(self.activity.participants!)"
+                            } else {
+                                self.counterLabel.text = "Full!"
+                                self.counterLabel.textColor = .red
+                            }
+                        }
+                    }
+                }
             }
         })
     }

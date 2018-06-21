@@ -98,10 +98,7 @@ class ProfileViewController: UIViewController {
                 self.ageLabel.text = user.age
                 self.locationLabel.text = user.location
                 self.mobileLabel.text = user.mobile
-                
                 self.fetchImage()
-                
-                
             }
         })
     }
