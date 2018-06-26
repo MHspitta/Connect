@@ -21,10 +21,8 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     var ref: DatabaseReference!
     var refHandle: UInt!
     var keyArray: [String] = []
-    var activities: [Activity2] = []
-    var partActivities: [Activity2] = []
     var allActivities = [[Activity2]]()
-    let sections = ["My created activities", "Participating activities", "Nieuw"]
+    let sections = ["My created activities", "Participating activities"]
     var idArray: [Id] = []
     let uid = Auth.auth().currentUser?.uid
     
@@ -40,8 +38,6 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "selfActivityDetail" {
             let activityDetailViewController = segue.destination as! ActivityDetailViewController
-//            let index = tableview.indexPathForSelectedRow!.row
-//            activityDetailViewController.activity = activities[index]
             
             if let indexPath = self.tableview.indexPathForSelectedRow {
                 let index = allActivities[indexPath.section][indexPath.row]
@@ -67,7 +63,7 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
         let cell = tableView.dequeueReusableCell(withIdentifier: "selfActivities", for: indexPath)
         let cellText = self.allActivities[indexPath.section][indexPath.row]
         
-        // Update textlabel en detail label
+        // Update textlabel
         cell.textLabel?.text = cellText.activity
         
         return cell
@@ -88,7 +84,7 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
             let when = DispatchTime.now() + 1
             DispatchQueue.main.asyncAfter(deadline: when, execute: {
                 self.ref.child("Activities").child(self.keyArray[indexPath.row]).removeValue()
-                self.activities.remove(at: indexPath.row)
+                self.allActivities.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 self.keyArray = []
             })
@@ -132,8 +128,8 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
                         activityX.append(activity)
                     }
                 }
-                self.activities = activityX
                 self.allActivities.append(activityX)
+                self.allActivities.append([])
                 self.fetchActivityId()
                 
                 DispatchQueue.main.async {
@@ -172,8 +168,8 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
                 var activityX: [Activity2] = []
-                self.allActivities.append([])
-                
+                self.allActivities[1] = []
+
                 // Itereate trough the snapshot and save the data
                 for child in snapshot.children {
                     let activity = Activity2(snapshot: child as! DataSnapshot)
@@ -185,8 +181,8 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
                         }
                     }
                 }
-                self.partActivities = activityX
                 self.allActivities[1] = activityX
+
                 self.idArray = []
 
                 DispatchQueue.main.async {

@@ -21,6 +21,7 @@ class ConnectViewController: UIViewController {
     let uid = Auth.auth().currentUser?.uid
     var keyArray: [String] = []
     var numbers: Int = 0
+    var check: Int = 0
     
     //MARK: - Outlets
     
@@ -38,9 +39,18 @@ class ConnectViewController: UIViewController {
         super.viewDidLoad()
         ref = Database.database().reference()
         fetchActivities()
+        changeLayout()
     }
     
     //MARK: - Functions
+    
+    // Function to change layout
+    func changeLayout() {
+        card.layer.shadowColor = UIColor.darkGray.cgColor
+        card.layer.shadowRadius = 4
+        card.layer.shadowOpacity = 1
+        card.layer.shadowOffset = CGSize(width: 0, height: -2)
+    }
     
     // Function to swipe
     @IBAction func SwipeCard(_ sender: UIPanGestureRecognizer) {
@@ -104,9 +114,14 @@ class ConnectViewController: UIViewController {
             self.thumbImage.alpha = 0
             self.card.alpha = 1
         })
-        randomActivity()
-        chooseImage()
+        self.check = 0
         
+        randomActivity()
+        
+        if check != 1 {
+            chooseImage()
+        }
+    
         activityLabel.text = currentActivity.activity
         locationLabel.text = currentActivity.location
         dateLabel.text = currentActivity.date
@@ -151,6 +166,7 @@ class ConnectViewController: UIViewController {
             self.cardImage.image = #imageLiteral(resourceName: "girlsNight")
         case "Men's Night":
             self.cardImage.image = #imageLiteral(resourceName: "mensNight")
+
         default:
             self.cardImage.image = #imageLiteral(resourceName: "Swimming")
         }
@@ -160,11 +176,12 @@ class ConnectViewController: UIViewController {
     func randomActivity() {
         let x = arc4random_uniform(UInt32(numbers))
         
-        if Int(x) == 1 {
+        if numbers == 0 {
             activityLabel.text = "Currently no activities available"
             locationLabel.text = ""
             dateLabel.text = ""
             participantsLabel.text = ""
+            self.check = 1
         } else {
             currentActivity = activities.remove(at: Int(x))
             self.numbers = self.numbers - 1

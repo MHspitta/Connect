@@ -25,7 +25,7 @@ class FriendsDetailViewController: UIViewController {
     
     var friend: User!
     var ref: DatabaseReference!
-    var refHandle: DatabaseHandle!
+    var refHandle: DatabaseHandle?
     let uid = Auth.auth().currentUser?.uid
     var userImage: UIImage!
     var idArray: [Id] = []
@@ -34,17 +34,37 @@ class FriendsDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference()
         updateUI()
         fetchImage()
+        roundImage(image: profileImage)
     }
     
     //MARK: - Functions
     
+    func changeLayout() {
+        profileImage.layer.shadowColor = UIColor.darkGray.cgColor
+        profileImage.layer.shadowRadius = 4
+        profileImage.layer.shadowOpacity = 1
+        profileImage.layer.shadowOffset = CGSize(width: 0, height: -2)
+    }
+    
+    // Function to make image round
+    func roundImage(image: UIImageView) {
+        image.layer.borderWidth = 1.0
+        image.layer.masksToBounds = false
+        image.layer.borderColor = UIColor.white.cgColor
+        image.layer.cornerRadius = image.frame.size.width / 2
+        image.clipsToBounds = true
+    }
+    
+    // Function to update UIView
     func updateUI() {
         nameLabel.text = friend.name
         ageLabel.text = friend.age
         locationLabel.text = friend.location
         mobileLabel.text = friend.mobile
+        fetchActivityId()
     }
     
     func fetchImage() {
@@ -67,8 +87,10 @@ class FriendsDetailViewController: UIViewController {
         
         // Get snapshot of firebase data
         refHandle = ref.child("Users").child(friend.uid!).child("participatingActivities").observe(.value, with: { (snapshot) in
-            
+            print(snapshot)
             if (snapshot.value as? [String:AnyObject]) != nil {
+                
+                print("1")
                 var idX: [Id] = []
                 
                 for child in snapshot.children {

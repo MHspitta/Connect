@@ -38,10 +38,22 @@ class ProfileEditViewController: UIViewController {
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
+        roundImage(image: imageView)
         
         if userData != [] {
             preFillUserData()
         }
+    }
+    
+    //MARK: - Functions
+    
+    // Function to make image round
+    func roundImage(image: UIImageView) {
+        image.layer.borderWidth = 1.0
+        image.layer.masksToBounds = false
+        image.layer.borderColor = UIColor.white.cgColor
+        image.layer.cornerRadius = image.frame.size.width / 2
+        image.clipsToBounds = true
     }
     
     // Button tap to change image

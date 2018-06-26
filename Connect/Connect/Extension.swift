@@ -43,22 +43,22 @@ extension ProfileEditViewController: UIImagePickerControllerDelegate, UINavigati
     }
 }
 
-// Extension to random pick element from array
-extension Array {
-    func randomItem() -> Element? {
-        if isEmpty { return nil }
-        let index = Int(arc4random_uniform(UInt32(self.count)))
-        return self[index]
-    }
-}
-
-// Extension to shuffle arrays
-extension Array {
-    mutating func shuffle() {
-        for _ in indices {
-            sort { (_,_) in arc4random() < arc4random() }
-        }
-    }
-}
+//// Extension to random pick element from array
+//extension Array {
+//    func randomItem() -> Element? {
+//        if isEmpty { return nil }
+//        let index = Int(arc4random_uniform(UInt32(self.count)))
+//        return self[index]
+//    }
+//}
+//
+//// Extension to shuffle arrays
+//extension Array {
+//    mutating func shuffle() {
+//        for _ in indices {
+//            sort { (_,_) in arc4random() < arc4random() }
+//        }
+//    }
+//}
 
 

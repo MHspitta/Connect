@@ -35,6 +35,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         ref = Database.database().reference()
         fetchUser()
+        roundImage(image: imageView)
     }
     
     // Function to push over to menu detail table
@@ -47,6 +48,22 @@ class ProfileViewController: UIViewController {
     }
     
     //MARK: - Functions
+    
+    func changeLayout() {
+        imageView.layer.shadowColor = UIColor.darkGray.cgColor
+        imageView.layer.shadowRadius = 4
+        imageView.layer.shadowOpacity = 1
+        imageView.layer.shadowOffset = CGSize(width: 0, height: -2)
+    }
+    
+    // Function to make image round
+    func roundImage(image: UIImageView) {
+        image.layer.borderWidth = 1.0
+        image.layer.masksToBounds = false
+        image.layer.borderColor = UIColor.white.cgColor
+        image.layer.cornerRadius = image.frame.size.width / 2
+        image.clipsToBounds = true
+    }
     
     // Function to log user out from Firebase
     @IBAction func logOut(_ sender: UIButton) {
