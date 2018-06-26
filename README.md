@@ -9,7 +9,7 @@ Die tijden zijn straks voorbij met de Connect app.
 Vindt coole activiteiten bij jou in de buurt en verveel je nooit meer!  
 Met de Connect app kan je gemakkelijke leuke activiteiten aanmaken/zoeken bij jou in de buurt.  
 Denk hierbij aan activiteiten zoals een avondje sporten, yu-gi-o kaartspel spelen, roeien, poolen etc.  
-De App focust zich op activiteiten, het maken en vinden van activiteiten is het hoofddoel. Je swiped op activiteiten en kan hier vervolgens aan deelnemen als het je echt wat lijkt. Wanneer je staat ingeschreven wordt je ook vrienden met andere die ook aangemeld staan voor deze activiteit. Zo beoordeel je geen personen, maar elkaars interesses indirect. 
+De App focust zich op activiteiten, het maken en vinden van activiteiten is het hoofddoel. Door te swipen op activiteiten kan je bepalen waar jij aan wilt deelnemen. Kom in contact met alle andere Connect gebruikers. Connect The World! 
 
 Het is tegenwoordig hartstikke normaal om via tinder een nieuwe vlam te vinden of je eten te bestellen via een app, waarom kan je niet ook deelnemen aan leuke/simpele activiteiten via een app? 
 
@@ -26,8 +26,6 @@ Het is tegenwoordig hartstikke normaal om via tinder een nieuwe vlam te vinden o
 
 **Prerequisites**  
 
-Activiteiten API: http://www.uitinnoordholland.nl/api/agenda/  
 Facebook login (optioneel) : https://developers.facebook.com/docs/facebook-login/ios  
 Google maps API (optioneel):  https://cloud.google.com/maps-platform/  
-
 Firebase: https://console.firebase.google.com/  
