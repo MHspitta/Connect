@@ -15,7 +15,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //MARK: - Outlets
     
     @IBOutlet weak var tableview: UITableView!
-    
+  
     //MARK: - Variables
     
     var ref: DatabaseReference!
@@ -40,7 +40,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let friendsDetailViewController = segue.destination as! FriendsDetailViewController
             let index = tableview.indexPathForSelectedRow!.row
             friendsDetailViewController.friend = users[index]
-            friendsDetailViewController.userImage = userImage
+//            friendsDetailViewController.userImage = userImage
         }
     }
     
@@ -60,11 +60,15 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // Update the tableview
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userFriends", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userFriends", for: indexPath) as! FriendsViewControllerTableViewCell
         let userFriends = users[indexPath.row]
         
         // Update textlabel
-        cell.textLabel?.text = userFriends.name
+        cell.nameLabel.text = userFriends.name
+        
+//        userImage = fetchImage(uid: userFriends.uid)
+        
+        cell.profileImage.image = #imageLiteral(resourceName: "blank-profile-picture-973460_960_720")
         
         return cell
     }
@@ -86,11 +90,24 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
                 
                 self.users = usersX
-            
+                
                 DispatchQueue.main.async {
                     self.tableview.reloadData()
                 }
             }
         })
+    }
+    
+    func fetchImage(uid: String) {
+        // set download path
+        let filePath = "gs://connect-e83a4.appspot.com/\(uid).jpg"
+
+        let storageRef = Storage.storage().reference(forURL: filePath)
+
+        // Download the data, assuming a max size of 1MB
+        storageRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) -> Void in
+
+            return data
+        }
     }
 }

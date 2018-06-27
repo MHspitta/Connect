@@ -47,6 +47,8 @@ class LoginViewController: UIViewController {
         
     }
     
+    //MARK: - Overrides
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()

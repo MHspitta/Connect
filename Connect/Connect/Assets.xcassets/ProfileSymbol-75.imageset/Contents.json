@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Connect-Logo-120.png",
+      "filename" : "ProfileSymbol-25.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "ProfileSymbol-50.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "ProfileSymbol-75.png",
       "scale" : "3x"
     }
   ],

@@ -19,6 +19,7 @@ struct User: Codable {
     var location: String!
     var mobile: String!
     var uid: String!
+    var bio: String!
     
     init(snapshot: DataSnapshot) {
         let snapshotValue = snapshot.value as! [String:AnyObject]
@@ -28,6 +29,7 @@ struct User: Codable {
         mobile = snapshotValue["mobile"] as! String
         name = snapshotValue["name"] as! String
         uid = snapshotValue["uid"] as! String
+        bio = snapshotValue["bio"] as! String
     }
 }
 
@@ -63,6 +65,16 @@ struct Id: Codable {
         let snapshotValue = snapshot.value as! [String:AnyObject]
         
         id = snapshotValue["id"] as! String
+    }
+}
+
+struct Uid: Codable {
+    var id: String!
+    
+    init(snapshot: DataSnapshot) {
+        let snapshotValue = snapshot.value as! [String:AnyObject]
+        
+        id = snapshotValue["uid"] as! String
     }
 }
 

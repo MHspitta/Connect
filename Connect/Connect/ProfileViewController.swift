@@ -19,6 +19,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var mobileLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var bioTextView: UITextView!
     
     //MARK: - Variables
     
@@ -49,6 +50,7 @@ class ProfileViewController: UIViewController {
     
     //MARK: - Functions
     
+    // Function to change the image layout to circle
     func changeLayout() {
         imageView.layer.shadowColor = UIColor.darkGray.cgColor
         imageView.layer.shadowRadius = 4
@@ -85,7 +87,6 @@ class ProfileViewController: UIViewController {
             } else {
                 self.imageView.image = #imageLiteral(resourceName: "blank-profile-picture-973460_960_720")
             }
-            
             self.fillUserData()
         }
     }
@@ -96,6 +97,7 @@ class ProfileViewController: UIViewController {
         self.userData.append(self.ageLabel.text!)
         self.userData.append(self.locationLabel.text!)
         self.userData.append(self.mobileLabel.text!)
+        self.userData.append(self.bioTextView.text!)
         
         self.profileImage = self.imageView.image
     }
@@ -115,6 +117,7 @@ class ProfileViewController: UIViewController {
                 self.ageLabel.text = user.age
                 self.locationLabel.text = user.location
                 self.mobileLabel.text = user.mobile
+                self.bioTextView.text = user.bio
                 self.fetchImage()
             }
         })

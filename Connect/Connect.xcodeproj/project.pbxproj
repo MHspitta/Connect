@@ -18,6 +18,7 @@
 		41A26AE320D7EE97008A6598 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A26AE220D7EE96008A6598 /* FriendsViewController.swift */; };
 		41A26AE520D7EEBA008A6598 /* FriendsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A26AE420D7EEBA008A6598 /* FriendsDetailViewController.swift */; };
 		41A40FE020CFD39100709312 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A40FDF20CFD39100709312 /* ProfileViewController.swift */; };
+		41A5DCD620E3B0DC00270188 /* FriendsViewControllerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A5DCD520E3B0DB00270188 /* FriendsViewControllerTableViewCell.swift */; };
 		41B1240620C69C230008E343 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B1240520C69C230008E343 /* AppDelegate.swift */; };
 		41B1240B20C69C230008E343 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B1240920C69C230008E343 /* Main.storyboard */; };
 		41B1240D20C69C2A0008E343 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B1240C20C69C2A0008E343 /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 		41A26AE220D7EE96008A6598 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		41A26AE420D7EEBA008A6598 /* FriendsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsDetailViewController.swift; sourceTree = "<group>"; };
 		41A40FDF20CFD39100709312 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		41A5DCD520E3B0DB00270188 /* FriendsViewControllerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewControllerTableViewCell.swift; sourceTree = "<group>"; };
 		41B1240220C69C230008E343 /* Connect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41B1240520C69C230008E343 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41B1240A20C69C230008E343 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				41A40FDF20CFD39100709312 /* ProfileViewController.swift */,
 				41A26AE020D7BC32008A6598 /* ProfileEditViewController.swift */,
 				41A26AE220D7EE96008A6598 /* FriendsViewController.swift */,
+				41A5DCD520E3B0DB00270188 /* FriendsViewControllerTableViewCell.swift */,
 				41A26AE420D7EEBA008A6598 /* FriendsDetailViewController.swift */,
 			);
 			path = Connect;
@@ -420,6 +423,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41A5DCD620E3B0DC00270188 /* FriendsViewControllerTableViewCell.swift in Sources */,
 				41633A0020CFE0AE00A17EAF /* CreateActivityViewController.swift in Sources */,
 				41A40FE020CFD39100709312 /* ProfileViewController.swift in Sources */,
 				41FDAA8820D1279F00F79159 /* ActivitiesTableViewController.swift in Sources */,

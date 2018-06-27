@@ -20,6 +20,7 @@ class FriendsDetailViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var mobileLabel: UILabel!
     @IBOutlet weak var partActivitiesTextview: UITextView!
+    @IBOutlet weak var bioTextView: UITextView!
     
     //MARK: - Variables
     
@@ -64,6 +65,7 @@ class FriendsDetailViewController: UIViewController {
         ageLabel.text = friend.age
         locationLabel.text = friend.location
         mobileLabel.text = friend.mobile
+        bioTextView.text = friend.bio
         fetchActivityId()
     }
     
@@ -87,10 +89,7 @@ class FriendsDetailViewController: UIViewController {
         
         // Get snapshot of firebase data
         refHandle = ref.child("Users").child(friend.uid!).child("participatingActivities").observe(.value, with: { (snapshot) in
-            print(snapshot)
             if (snapshot.value as? [String:AnyObject]) != nil {
-                
-                print("1")
                 var idX: [Id] = []
                 
                 for child in snapshot.children {

@@ -70,8 +70,11 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        print(section)
         return self.sections[section]
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45
     }
     
     // Function to delete activity

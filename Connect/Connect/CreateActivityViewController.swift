@@ -41,7 +41,6 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
-        
         self.hideKeyboardWhenTappedAround()
         registerForKeyboardNotifications()
     }
@@ -142,8 +141,23 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         // Send all data to Firebase
         let newRef = ref.child("Activities").childByAutoId()
         let autoID = newRef.key
+        
+        if activityName.text != "" && category != "" && maxParticipants.text != "" && locationActivity.text != "" && descriptionTextfield.text != "" {
+            newRef.setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : uid, "creator" : uid, "organisor" : userName, "activityID" : autoID])
+            createAlert(title: "Congratulations!", message: "Your activity is succesfully created!")
+        } else {
+            createAlert(title: "Attention!", message: "Please complete the empty spaces to create activity!")
+        }
+    }
     
-        newRef.setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : uid, "creator" : uid, "organisor" : userName, "activityID" : autoID])
+    // Function to alert user when not updated profile yet
+    func createAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     // Function to clear the textfields

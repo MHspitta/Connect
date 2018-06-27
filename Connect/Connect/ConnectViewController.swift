@@ -22,6 +22,7 @@ class ConnectViewController: UIViewController {
     var keyArray: [String] = []
     var numbers: Int = 0
     var check: Int = 0
+    var check2: Int = 0
     
     //MARK: - Outlets
     
@@ -32,6 +33,7 @@ class ConnectViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var cardImage: UIImageView!
     @IBOutlet weak var participantsLabel: UILabel!
+    @IBOutlet weak var discriptionView: UIView!
     
     //MARK: - Overrides
     
@@ -40,16 +42,29 @@ class ConnectViewController: UIViewController {
         ref = Database.database().reference()
         fetchActivities()
         changeLayout()
+        fetchActivityIds()
     }
     
     //MARK: - Functions
     
+    // Function to alert user when not updated profile yet
+    func createAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     // Function to change layout
     func changeLayout() {
+        discriptionView.layer.cornerRadius = 7
+        card.layer.cornerRadius = 10
         card.layer.shadowColor = UIColor.darkGray.cgColor
-        card.layer.shadowRadius = 4
+        card.layer.shadowRadius = 10
         card.layer.shadowOpacity = 1
-        card.layer.shadowOffset = CGSize(width: 0, height: -2)
+        card.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
     // Function to swipe
@@ -127,7 +142,8 @@ class ConnectViewController: UIViewController {
         dateLabel.text = currentActivity.date
         participantsLabel.text = currentActivity.participants
     }
-
+    
+    // Function to choose image
     func chooseImage() {
         switch currentActivity.category {
         case "Outdoor Sports":
@@ -216,6 +232,32 @@ class ConnectViewController: UIViewController {
                 self.activities = activityX
                 self.resetCard()
             }
+        })
+    }
+    
+    // Function to fetch all activities that user participate
+    func fetchActivityIds() {
+        
+        // Get snapshot of firebase data
+        refHandle = ref.child("Users").observe(.value, with: { (snapshot) in
+            
+            if (snapshot.value as? [String:AnyObject]) != nil {
+                
+                for child in snapshot.children {
+                    
+                    let userId = Uid(snapshot: child as! DataSnapshot)
+                    
+                    if userId.id == self.uid {
+                        self.check2 = 1
+                    }
+                }
+            }
+            
+            // Pop up alert message if user not registred yet
+            if self.check2 != 1 {
+                self.createAlert(title: "WELCOME!" , message: "Please update your profile BEFORE using the app!!")
+            }
+            
         })
     }
 }
