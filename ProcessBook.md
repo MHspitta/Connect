@@ -83,3 +83,5 @@ Tomorrow Im going to give my app the finishing touch and write the report.
 
 28 juni 2018
 Today I finished the layout of my ActivityDetailViewController by using some custom frames and lines which I made in Sketch. Also I cleaned up my code and decided to remove the delete function because I have to check to much in my database if I keep this function. 
+After I thought I finished the app I again tried all functions and possible bugs. I found several new small bugs which I corrected all and erverything is working like it should. 
+Tomorrow I will make a demo video of the app and prepare the presentation for the afternoon. Suddenly I have to present my project, even I didn't nominate myself... but Im happy to now
