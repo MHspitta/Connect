@@ -143,7 +143,7 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
             createAlert(title: "Congratulations!", message: "Your activity is succesfully created!")
             clearAll()
         } else {
-            createAlert(title: "Attention!", message: "Please complete the empty spaces to create activity!")
+            createAlert(title: "Attention!", message: "Please complete all empty fields to create the activity!")
         }
     }
     

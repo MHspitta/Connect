@@ -57,6 +57,8 @@ class SignUpViewController: UIViewController {
             } else {
                 message.text = "Password didn't match!"
             }
+        } else {
+            message.text = "Pls complete all fields!"
         }
         clearAll()
     }
