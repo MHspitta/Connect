@@ -77,21 +77,3 @@ struct Uid: Codable {
         id = snapshotValue["uid"] as! String
     }
 }
-
-struct RandomItems
-{
-    var items : [Activity]
-    var seen  = 0
-    
-    init(_ items:[Activity])
-    { self.items = items }
-    
-    mutating func next() -> Activity
-    {
-        let index = Int(arc4random_uniform(UInt32(items.count - seen)))
-        let item  = items.remove(at:index)
-        items.append(item)
-        seen = (seen + 1) % items.count
-        return item
-    }
-}

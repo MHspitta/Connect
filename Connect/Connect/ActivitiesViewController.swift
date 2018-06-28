@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ActivitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     //MARK: - Outlets
     

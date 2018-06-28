@@ -85,9 +85,9 @@
                     <connections>
                         <outlet property="SignUp" destination="BYM-BP-Cwy" id="5oz-9z-Zog"/>
                         <outlet property="emailText" destination="zjN-Cd-1aW" id="3H1-aH-M1h"/>
+                        <outlet property="message" destination="4Ae-Et-08d" id="kO8-qr-eAJ"/>
                         <outlet property="passwordText" destination="4fo-3d-Ogm" id="lsa-tb-IvL"/>
                         <outlet property="passwordTextCheck" destination="Jb8-iH-9re" id="Ouc-vm-cm4"/>
-                        <outlet property="succesMessage" destination="4Ae-Et-08d" id="kO8-qr-eAJ"/>
                         <segue destination="mIe-rA-iAW" kind="show" identifier="SignUpSuccesSegue" id="MdO-Hp-OmM"/>
                     </connections>
                 </viewController>
@@ -958,10 +958,10 @@
             </objects>
             <point key="canvasLocation" x="1444" y="-1139.408866995074"/>
         </scene>
-        <!--Activities Table View Controller-->
+        <!--Activities View Controller-->
         <scene sceneID="Hof-jh-g1c">
             <objects>
-                <viewController id="Hi7-Zp-z7m" customClass="ActivitiesTableViewController" customModule="Connect" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Hi7-Zp-z7m" customClass="ActivitiesViewController" customModule="Connect" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QZT-gl-Od6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

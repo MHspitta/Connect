@@ -21,7 +21,6 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var locationActivity: UITextField!
     @IBOutlet weak var descriptionTextfield: UITextView!
-    @IBOutlet weak var imagePicker: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     
     //MARK: - Variables
@@ -103,19 +102,6 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         category = categories[row]
-    }
-    
-    // Function to pick image from library
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        imagePicker.image = image
-        imagePicker.contentMode = .scaleAspectFill
-        
-        dismiss(animated: true, completion: nil)
     }
     
     //MARK: - Functions

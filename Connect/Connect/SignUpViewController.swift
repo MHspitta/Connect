@@ -18,14 +18,14 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var SignUp: UIButton!
     @IBOutlet weak var passwordTextCheck: UITextField!
-    @IBOutlet weak var succesMessage: UILabel!
+    @IBOutlet weak var message: UILabel!
     
     //MARK: - Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        succesMessage.text = ""
+        message.text = ""
     }
     
     //MARK: - Functions
@@ -47,14 +47,14 @@ class SignUpViewController: UIViewController {
                         self.performSegue(withIdentifier: "SignUpSuccesSegue", sender: self)
                     } else {
                         if let myError = error?.localizedDescription {
-                            self.succesMessage.text = myError
+                            self.message.text = myError
                         } else {
-                            self.succesMessage.text = "ERROR, signup failed!"
+                            self.message.text = "ERROR, signup failed!"
                         }
                     }
                 })
             } else {
-                succesMessage.text = "Password didn't match!"
+                message.text = "Password didn't match!"
             }
         }
         clearAll()
