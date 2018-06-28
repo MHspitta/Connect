@@ -1,5 +1,8 @@
 # FINAL REPORT #
 
+![alt text](https://github.com/MHspitta/Connect/blob/master/doc/IMG_2043.PNG)
+![alt text](https://github.com/MHspitta/Connect/blob/master/doc/IMG_2044.PNG)  
+
 ## Korte omschrijving ##
 Heb jij ook wel eens het gevoel dat je zin hebt om iets te doen, maar eigenlijk geen van je vrienden(groepen) er zin in heeft of dat je zin hebt om iets te doen maar niet weet wat voor leuke activiteiten er in de buurt zijn? Waarnaar je vervolgens toch maar weer die playstation aanzet en in je eentje heel de dag thuis zit te gamen...
 
