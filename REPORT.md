@@ -137,5 +137,18 @@ Omdat ik veel met optional values werkte heb ik heel veel checks overal moeten n
 Al bij al erg tevreden over het resultaat, maar er gaat nog heel veel aan gedaan worden. Het uiteindelijk doel is om de app echt uit te brengen.
 
 ## Defense ##
-Uiteindelijk heb ik geen spijt gehad van mijn keuzes, omdat ik geen gebruik maak van de UITIn noord holland API heb ik mijn app helemaal naar mijn idee kunnen vormen met alle foto's etc. En heb je gewoon altijd activiteiten die actief zijn en goed passen. 
-Verder gezien de tijdnood heb ik wat functies eruit gelaten, maar deze wel vervangen door een passende oplossing waardoor de app nog steeds erg gebruiksvriendelijk is. 
+Uiteindelijk heb ik geen spijt gehad van mijn keuzes, omdat ik geen gebruik maak van de UIT In noord holland API heb ik mijn app helemaal naar mijn idee kunnen vormen met alle foto's etc. En heb je gewoon altijd activiteiten die actief zijn en goed passen. 
+Verder gezien de tijdnood heb ik wat functies eruit gelaten, maar deze wel vervangen door passende oplossingen waardoor de app nog steeds erg gebruiksvriendelijk is. 
+
+## Toekomst ##
+Dit is extra, maar ter informatie is het de bedoeling dat ik deze app veel verder ga uitwerken. Het is altijd al een droom geweest om deze app te maken en nu eindelijk is het mij soort van gelukt.
+Een paar belangrijke functies die ik nog zeker wil gaan toevoegen is:
+
+1. Chat Functie
+2. Vrienden functie
+3. Facebook login (gewoon voor het gemak)
+4. Delete functie
+5. Google Maps locatie API
+
+Verder wil ik eigenlijk nog meer data gaan verzamelen van de gebruikers, zodat ik op lange termijn hier ook statistieken uit kan halen door bijvoorbeeld popuaire activiteits categorien vaker/eerder te laten zien. En of gepersonaliseerde activiteitsvertoning. 
+
