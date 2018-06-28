@@ -21,7 +21,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var ref: DatabaseReference!
     var refHandle: UInt!
     var users: [User] = []
-    var userImage: UIImage!
     
     // Current user logged in
     let uid = Auth.auth().currentUser?.uid
@@ -40,12 +39,12 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let friendsDetailViewController = segue.destination as! FriendsDetailViewController
             let index = tableview.indexPathForSelectedRow!.row
             friendsDetailViewController.friend = users[index]
-//            friendsDetailViewController.userImage = userImage
         }
     }
     
     //MARK: - Functions
     
+    // Function to set the titleheader of section
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "Connect users"
@@ -66,11 +65,32 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Update textlabel
         cell.nameLabel.text = userFriends.name
         
-//        userImage = fetchImage(uid: userFriends.uid)
+        // set download path for profile photo
+        let filePath = "gs://connect-e83a4.appspot.com/\(userFriends.uid!).jpg"
+        let storageRef = Storage.storage().reference(forURL: filePath)
         
-        cell.profileImage.image = #imageLiteral(resourceName: "blank-profile-picture-973460_960_720")
-        
+        // Download the image, assuming a max size of 1MB
+        storageRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) -> Void in
+            if let dataUnwrapped = data {
+                
+                DispatchQueue.main.async {
+                    self.roundImage(image: cell.profileImage)
+                    
+                    // Set profile image in custom cell
+                    cell.profileImage.image = UIImage(data: dataUnwrapped)
+                }
+            }
+        }
         return cell
+    }
+    
+    // Function to make image round
+    func roundImage(image: UIImageView) {
+        image.layer.borderWidth = 1.0
+        image.layer.masksToBounds = false
+        image.layer.borderColor = UIColor.white.cgColor
+        image.layer.cornerRadius = image.frame.size.width / 2
+        image.clipsToBounds = true
     }
     
     // Function to fetch all users
@@ -96,18 +116,5 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
             }
         })
-    }
-    
-    func fetchImage(uid: String) {
-        // set download path
-        let filePath = "gs://connect-e83a4.appspot.com/\(uid).jpg"
-
-        let storageRef = Storage.storage().reference(forURL: filePath)
-
-        // Download the data, assuming a max size of 1MB
-        storageRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) -> Void in
-
-            return data
-        }
     }
 }

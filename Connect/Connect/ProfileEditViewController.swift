@@ -13,6 +13,8 @@ import FirebaseStorage
 
 class ProfileEditViewController: UIViewController {
     
+    //MARK: - Variables
+    
     var imagePicker: UIImagePickerController!
     let uid = Auth.auth().currentUser?.uid
     var ref: DatabaseReference!
@@ -20,6 +22,7 @@ class ProfileEditViewController: UIViewController {
     var profileImage: UIImage!
     var check:Int = 0
     
+    //MARK: - Outlets
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameInput: UITextField!
@@ -28,12 +31,13 @@ class ProfileEditViewController: UIViewController {
     @IBOutlet weak var mobileInput: UITextField!
     @IBOutlet weak var bioTextView: UITextView!
     
+    //MARK: - Overrides
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         ref = Database.database().reference()
         self.hideKeyboardWhenTappedAround()
-        imageView.image = profileImage
         
         // Image picker
         imagePicker = UIImagePickerController()
@@ -41,7 +45,10 @@ class ProfileEditViewController: UIViewController {
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         roundImage(image: imageView)
-
+        
+        imageView.image = profileImage
+        
+        // Check if there is user data
         if userData != [] {
             preFillUserData()
         }
@@ -66,15 +73,14 @@ class ProfileEditViewController: UIViewController {
     // Button save pressed
     @IBAction func saveChanges(_ sender: UIButton) {
         uploadData()
+        
+        // Check if all fields all filled
         if check == 1 {
             createAlert(title: "Congratulations!", message: "Your profile is succesfully updated!")
         }
     }
     
-    @IBAction func cancelEdit(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "toProfileSegue", sender: self)
-    }
-    
+    // Function to prefill user data in text input fields
     func preFillUserData() {
         nameInput.text = userData[0]
         ageInput.text = userData[1]
@@ -107,19 +113,21 @@ class ProfileEditViewController: UIViewController {
         // Check which user is logged in
         let uid = Auth.auth().currentUser?.uid
         
+        // Check for all inputs
         if nameInput.text != "" && ageInput.text != "" && locationInput.text != "" && mobileInput.text != "" {
+            
             // Send all data to Firebase
             ref.child("Users").child(uid!).setValue(["name" : name, "age" : age, "location" : location, "mobile" : mobile, "uid" : uid, "bio" : bio])
+            
+            // Set check variable
             self.check = 1
         } else {
-            createAlert(title: "Attention", message: "Please fill in all empty spaces")
+            createAlert(title: "Attention", message: "Please fill in all the empty fields")
         }
-        
         uploadImagePic(img1: image)
-
     }
     
-    // Function to alert user when not updated profile yet
+    // Function to alert user with popup message
     func createAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -131,7 +139,6 @@ class ProfileEditViewController: UIViewController {
     
     // Function to upload image to firebase
     func uploadImagePic(img1: UIImage) {
-        
         var data = NSData()
         
         // Set size of image uploaded
@@ -143,6 +150,5 @@ class ProfileEditViewController: UIViewController {
         let storageRef = Storage.storage().reference()
         
         storageRef.child(filePath).putData(data as Data)
-        
     }
 }

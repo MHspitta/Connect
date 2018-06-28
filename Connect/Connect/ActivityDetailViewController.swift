@@ -16,8 +16,10 @@ class ActivityDetailViewController: UIViewController {
     
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
-    var activity: Activity2!
+    var activity: Activity!
     var idArray: [Id] = []
+    
+    // Counter for participants
     var counter: Int!
     
     //MARK: - Outlets
@@ -45,14 +47,19 @@ class ActivityDetailViewController: UIViewController {
     
     // Function to update the detailview
     func updateUI() {
+        updateLabels()
+        getCreatorData()
+        getPartIds()
+        changeBackground()
+    }
+    
+    func updateLabels() {
         activityName.text = activity.activity
         categoryLabel.text = activity.category
         dateLabel.text = activity.date
         locationLabel.text = activity.location
         descriptionTextField.text = activity.description
-        getCreatorData()
-        getPartIds()
-        changeBackground()
+        activityName.adjustsFontSizeToFitWidth = true
     }
     
     func changeBackground() {
@@ -116,8 +123,6 @@ class ActivityDetailViewController: UIViewController {
     
     // Function to get the participants uid
     func getPartIds() {
-        
-        // Get snapshot of firebase data
         refHandle = ref.child("Activities").child(activity.activityID).child("participating(uid)").observe(.value, with: { (snapshot) in
             
             if (snapshot.value as? [String:AnyObject]) != nil {
@@ -135,20 +140,26 @@ class ActivityDetailViewController: UIViewController {
         })
     }
     
+    // Function to get all participating user's name
     func getPartName() {
         refHandle = ref.child("Users").observe(.value , with: { ( snapshot) in
             
+            // Counter to count partipants
             self.counter = 0
             
             if (snapshot.value as? [String:AnyObject]) != nil {
                 for child in snapshot.children {
                     let user = User(snapshot: child as! DataSnapshot)
                     
+                    // Loop trough all participants uid's
                     for id in self.idArray {
+                        
+                        // Check if user participates
                         if id.id == user.uid! {
                             
                             self.participantsTextView.text.append(user.name + ", ")
                             self.counter = self.counter + 1
+                            
                             if self.counter! < Int(self.activity.participants)! {
                                 self.counterLabel.text = "\(self.counter!)/\(self.activity.participants!)"
                             } else {

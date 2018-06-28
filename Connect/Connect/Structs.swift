@@ -34,7 +34,7 @@ struct User: Codable {
 }
 
 // Struct for activities from Firebase
-struct Activity2: Codable {
+struct Activity: Codable {
     var activity: String!
     var category: String!
     var date: String!
@@ -80,13 +80,13 @@ struct Uid: Codable {
 
 struct RandomItems
 {
-    var items : [Activity2]
+    var items : [Activity]
     var seen  = 0
     
-    init(_ items:[Activity2])
+    init(_ items:[Activity])
     { self.items = items }
     
-    mutating func next() -> Activity2
+    mutating func next() -> Activity
     {
         let index = Int(arc4random_uniform(UInt32(items.count - seen)))
         let item  = items.remove(at:index)

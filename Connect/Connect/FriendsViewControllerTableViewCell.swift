@@ -10,9 +10,12 @@ import UIKit
 
 class FriendsViewControllerTableViewCell: UITableViewCell {
 
+    //MARK: - Outlets
+    
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
+    //MARK: - Overrides
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,5 +27,4 @@ class FriendsViewControllerTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

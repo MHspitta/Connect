@@ -98,28 +98,29 @@ class ProfileViewController: UIViewController {
         self.userData.append(self.locationLabel.text!)
         self.userData.append(self.mobileLabel.text!)
         self.userData.append(self.bioTextView.text!)
-        
         self.profileImage = self.imageView.image
     }
     
     // Function to fetch user data from firebase
     func fetchUser() {
-        
-        // Get snapshot of firebase data
         refHandle = ref.child("Users").child(uid!).observe(.value, with: { (snapshot) in
             
             // Check if snapshot isn't nil
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
                 let user = User(snapshot: snapshot)
-                
-                self.nameLabel.text = user.name
-                self.ageLabel.text = user.age
-                self.locationLabel.text = user.location
-                self.mobileLabel.text = user.mobile
-                self.bioTextView.text = user.bio
+                self.updateLabels(user: user)
                 self.fetchImage()
             }
         })
+    }
+    
+    // Function to update all labels
+    func updateLabels(user: User) {
+        self.nameLabel.text = user.name
+        self.ageLabel.text = user.age
+        self.locationLabel.text = user.location
+        self.mobileLabel.text = user.mobile
+        self.bioTextView.text = user.bio
     }
 }

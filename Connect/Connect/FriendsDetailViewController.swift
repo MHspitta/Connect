@@ -28,7 +28,6 @@ class FriendsDetailViewController: UIViewController {
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle?
     let uid = Auth.auth().currentUser?.uid
-    var userImage: UIImage!
     var idArray: [Id] = []
     
     //MARK: - Overrides
@@ -61,14 +60,20 @@ class FriendsDetailViewController: UIViewController {
     
     // Function to update UIView
     func updateUI() {
+        updateLabels()
+        fetchActivityId()
+    }
+    
+    func updateLabels() {
         nameLabel.text = friend.name
         ageLabel.text = friend.age
         locationLabel.text = friend.location
         mobileLabel.text = friend.mobile
         bioTextView.text = friend.bio
-        fetchActivityId()
+        nameLabel.adjustsFontSizeToFitWidth = true
     }
     
+    // Function that fetches profileimage from Firebase
     func fetchImage() {
         // set download path
         let filePath = "gs://connect-e83a4.appspot.com/\(friend.uid!).jpg"
@@ -86,8 +91,6 @@ class FriendsDetailViewController: UIViewController {
     
     // Function to fetch all activities that user participate
     func fetchActivityId() {
-        
-        // Get snapshot of firebase data
         refHandle = ref.child("Users").child(friend.uid!).child("participatingActivities").observe(.value, with: { (snapshot) in
             if (snapshot.value as? [String:AnyObject]) != nil {
                 var idX: [Id] = []
@@ -106,14 +109,13 @@ class FriendsDetailViewController: UIViewController {
     
     // Function to fetch all participating activities
     func fetchPartActivities() {
-        
         refHandle = ref.child("Activities").observe(.value , with: { ( snapshot) in
             
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
                 // Itereate trough the snapshot and save the data
                 for child in snapshot.children {
-                    let activity = Activity2(snapshot: child as! DataSnapshot)
+                    let activity = Activity(snapshot: child as! DataSnapshot)
                     
                     for id in self.idArray {
                         if id.id == activity.activityID!{

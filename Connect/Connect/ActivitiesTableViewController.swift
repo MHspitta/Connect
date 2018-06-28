@@ -20,8 +20,7 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     
     var ref: DatabaseReference!
     var refHandle: UInt!
-    var keyArray: [String] = []
-    var allActivities = [[Activity2]]()
+    var allActivities = [[Activity]]()
     let sections = ["My created activities", "Participating activities"]
     var idArray: [Id] = []
     let uid = Auth.auth().currentUser?.uid
@@ -69,62 +68,29 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
         return cell
     }
     
+    // Function to set title headers for sections
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.sections[section]
     }
     
+    // Function to set height of section header
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 45
     }
     
-    // Function to delete activity
-    func tableView(_ tableView: UITableView, commit
-        editingStyle: UITableViewCellEditingStyle, forRowAt indexPath:
-        IndexPath) {
-        if editingStyle == .delete {
-            getAllKeys()
-            
-            let when = DispatchTime.now() + 1
-            DispatchQueue.main.asyncAfter(deadline: when, execute: {
-                self.ref.child("Activities").child(self.keyArray[indexPath.row]).removeValue()
-                self.allActivities.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                self.keyArray = []
-            })
-        }
-    }
-    
-    // Function to get all activity keys from firebase
-    func getAllKeys() {
-        ref?.child("Activities").observeSingleEvent(of: .value, with: { (snapshot) in
-            for child in snapshot.children {
-                let snap = child as! DataSnapshot
-                let key = snap.key
-                self.keyArray.append(key)
-            }
-        })
-    }
-    
-    // Function to swipe a activity
-    func tableView(_ tableView: UITableView, canEditRowAt
-        indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
     // Function to fetch self (user) created the activities from firebase
     func fetchActivities() {
-        
-        // Get snapshot of firebase data
         refHandle = ref.child("Activities").observe(.value, with: { (snapshot) in
         
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
-                var activityX: [Activity2] = []
+                // Empty the variables
+                var activityX: [Activity] = []
                 self.allActivities = []
                 
                 // Itereate trough the snapshot and save the data
                 for child in snapshot.children {
-                    let activity = Activity2(snapshot: child as! DataSnapshot)
+                    let activity = Activity(snapshot: child as! DataSnapshot)
                     
                     // Only append activities created by user self
                     if self.uid == activity.creator {
@@ -144,8 +110,6 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     
     // Function to fetch all activities that user participate
     func fetchActivityId() {
-
-        // Get snapshot of firebase data
         refHandle = ref.child("Users").child(uid!).child("participatingActivities").observe(.value, with: { (snapshot) in
             
             if (snapshot.value as? [String:AnyObject]) != nil {
@@ -165,27 +129,26 @@ class ActivitiesTableViewController: UIViewController, UITableViewDelegate, UITa
     
     // Function to fetch all participating activities
     func fetchPartActivities() {
-        
         refHandle = ref.child("Activities").observe(.value , with: { ( snapshot) in
             
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
-                var activityX: [Activity2] = []
+                var activityX: [Activity] = []
                 self.allActivities[1] = []
 
                 // Itereate trough the snapshot and save the data
                 for child in snapshot.children {
-                    let activity = Activity2(snapshot: child as! DataSnapshot)
+                    let activity = Activity(snapshot: child as! DataSnapshot)
                     
                     for id in self.idArray {
+                        
+                        // Only append participating activities of user
                         if id.id == activity.activityID!{
-                            
                             activityX.append(activity)
                         }
                     }
                 }
                 self.allActivities[1] = activityX
-
                 self.idArray = []
 
                 DispatchQueue.main.async {

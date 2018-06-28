@@ -14,15 +14,24 @@ class ConnectViewController: UIViewController {
     
     //MARK: - Variables
     
-    var activities: [Activity2] = []
+    var activities: [Activity] = []
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
-    var currentActivity: Activity2!
+    var currentActivity: Activity!
     let uid = Auth.auth().currentUser?.uid
     var keyArray: [String] = []
+    
+    // Counter for number of available activities
     var numbers: Int = 0
+    
+    // Check for available activities
     var check: Int = 0
+    
+    // Check for existence of user profile in firebase
     var check2: Int = 0
+    
+    // Counter for participants
+    var counterP: Int = 0
     
     //MARK: - Outlets
     
@@ -47,16 +56,6 @@ class ConnectViewController: UIViewController {
     
     //MARK: - Functions
     
-    // Function to alert user when not updated profile yet
-    func createAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     // Function to change layout
     func changeLayout() {
         discriptionView.layer.cornerRadius = 7
@@ -67,7 +66,7 @@ class ConnectViewController: UIViewController {
         card.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
-    // Function to swipe
+    // Function to swipe the card with gesture
     @IBAction func SwipeCard(_ sender: UIPanGestureRecognizer) {
         let card = sender.view!
         let point = sender.translation(in: view)
@@ -114,7 +113,6 @@ class ConnectViewController: UIViewController {
                 }
                 return
             }
-            
             UIView.animate(withDuration: 0.2, animations: {
                 card.center = self.view.center
                 self.thumbImage.alpha = 0
@@ -130,20 +128,24 @@ class ConnectViewController: UIViewController {
             self.card.alpha = 1
         })
         self.check = 0
-        
         randomActivity()
         
         if check != 1 {
             chooseImage()
+            updateLabels()
         }
+        
+    }
     
+    // Function that updates the labels
+    func updateLabels() {
         activityLabel.text = currentActivity.activity
         locationLabel.text = currentActivity.location
         dateLabel.text = currentActivity.date
         participantsLabel.text = currentActivity.participants
     }
     
-    // Function to choose image
+    // Function to choose image for card
     func chooseImage() {
         switch currentActivity.category {
         case "Outdoor Sports":
@@ -193,10 +195,7 @@ class ConnectViewController: UIViewController {
         let x = arc4random_uniform(UInt32(numbers))
         
         if numbers == 0 {
-            activityLabel.text = "Currently no activities available"
-            locationLabel.text = ""
-            dateLabel.text = ""
-            participantsLabel.text = ""
+            noActivities()
             self.check = 1
         } else {
             currentActivity = activities.remove(at: Int(x))
@@ -204,8 +203,18 @@ class ConnectViewController: UIViewController {
         }
     }
     
+    // Function for when there are no activities
+    func noActivities() {
+        activityLabel.text = "Currently no activities available"
+        locationLabel.text = ""
+        dateLabel.text = ""
+        participantsLabel.text = ""
+        cardImage.image = #imageLiteral(resourceName: "sad-tears-smiley-minimalism-4k-fz-1280x2120")
+    }
+    
     // Function to upload all data to firebase when activity is liked
     func likeActivity() {
+        
         // Add activitiy to User database
         ref.child("Users").child(uid!).child("participatingActivities").childByAutoId().setValue(["id" : currentActivity.activityID])
         
@@ -218,14 +227,14 @@ class ConnectViewController: UIViewController {
         
         // Get snapshot of firebase data
         ref?.child("Activities").observeSingleEvent(of: .value, with: { (snapshot) in
-            
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
-                var activityX: [Activity2] = []
+                var activityX: [Activity] = []
                 
                 // Itereate trough the snapshot and save the data
                 for child in snapshot.children {
-                    let activity = Activity2(snapshot: child as! DataSnapshot)
+                    let activity = Activity(snapshot: child as! DataSnapshot)
+                    
                     activityX.append(activity)
                     self.numbers = self.numbers + 1
                 }
@@ -235,16 +244,14 @@ class ConnectViewController: UIViewController {
         })
     }
     
-    // Function to fetch all activities that user participate
+    // Function to fetch all activities that user participate on
     func fetchActivityIds() {
         
         // Get snapshot of firebase data
         refHandle = ref.child("Users").observe(.value, with: { (snapshot) in
-            
             if (snapshot.value as? [String:AnyObject]) != nil {
                 
                 for child in snapshot.children {
-                    
                     let userId = Uid(snapshot: child as! DataSnapshot)
                     
                     if userId.id == self.uid {
@@ -252,12 +259,20 @@ class ConnectViewController: UIViewController {
                     }
                 }
             }
-            
             // Pop up alert message if user not registred yet
             if self.check2 != 1 {
                 self.createAlert(title: "WELCOME!" , message: "Please update your profile BEFORE using the app!!")
             }
-            
         })
+    }
+    
+    // Function to alert user when not updated profile yet
+    func createAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }

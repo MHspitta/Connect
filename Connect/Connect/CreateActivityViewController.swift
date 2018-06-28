@@ -30,10 +30,7 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
     var refHandle: DatabaseHandle!
     var category: String!
     var userName: String!
-    
-    // Check which user is logged in
     let uid = Auth.auth().currentUser?.uid
-
     let categories = ["Outdoor Sports", "Swimming", "Chilling", "Game", "Movie", "Football", "Festival", "Party", "Theather", "Extreme sports", "Water Activities", "Self care", "Running", "Music", "Indoor Sports", "Food", "Car", "Girl's Night", "Men's Night"]
     
     //MARK: - Overrides
@@ -67,8 +64,7 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         let keyboardFrame = keyboardFrameValue.cgRectValue
         let keyboardSize = keyboardFrame.size
         
-        let contentInsets = UIEdgeInsetsMake(0.0, 0.0,
-                                             keyboardSize.height, 0.0)
+        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0)
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
     }
@@ -80,6 +76,7 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         scrollView.scrollIndicatorInsets = contentInsets
     }
     
+    // Function to adjust scrollview when keyboard appears
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         
@@ -138,19 +135,24 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
         let stringDate = dateFormatter.string(from: date)
         
-        // Send all data to Firebase
+        // Variables
         let newRef = ref.child("Activities").childByAutoId()
         let autoID = newRef.key
         
+        // Check input of user
         if activityName.text != "" && category != "" && maxParticipants.text != "" && locationActivity.text != "" && descriptionTextfield.text != "" {
+            
+            // Send all data to firebase
             newRef.setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : uid, "creator" : uid, "organisor" : userName, "activityID" : autoID])
+            
+            // Alert user
             createAlert(title: "Congratulations!", message: "Your activity is succesfully created!")
         } else {
             createAlert(title: "Attention!", message: "Please complete the empty spaces to create activity!")
         }
     }
     
-    // Function to alert user when not updated profile yet
+    // Function to alert user with popup
     func createAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
