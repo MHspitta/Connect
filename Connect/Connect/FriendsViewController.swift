@@ -59,7 +59,9 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // Update the tableview
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userFriends", for: indexPath) as! FriendsViewControllerTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userFriends"
+            , for: indexPath) as! FriendsViewControllerTableViewCell
+        
         let userFriends = users[indexPath.row]
         
         // Update textlabel

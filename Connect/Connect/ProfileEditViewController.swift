@@ -20,6 +20,8 @@ class ProfileEditViewController: UIViewController {
     var ref: DatabaseReference!
     var userData: [String]!
     var profileImage: UIImage!
+    
+    // Variable to check if all input fields are filled
     var check:Int = 0
     
     //MARK: - Outlets
@@ -73,11 +75,6 @@ class ProfileEditViewController: UIViewController {
     // Button save pressed
     @IBAction func saveChanges(_ sender: UIButton) {
         uploadData()
-        
-        // Check if all fields all filled
-        if check == 1 {
-            createAlert(title: "Congratulations!", message: "Your profile is succesfully updated!")
-        }
     }
     
     // Function to prefill user data in text input fields
@@ -92,27 +89,21 @@ class ProfileEditViewController: UIViewController {
     // Upload data to firebase
     func uploadData() {
         guard let name  = nameInput.text else {
-            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let age = ageInput.text else {
-            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let location = locationInput.text else {
-            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let mobile = mobileInput.text else {
-            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let image = imageView.image else {
-            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let bio = bioTextView.text else {
-            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         
@@ -120,25 +111,31 @@ class ProfileEditViewController: UIViewController {
         let uid = Auth.auth().currentUser?.uid
         
         // Check for all inputs
-        if nameInput.text != "" && ageInput.text != "" && locationInput.text != "" && mobileInput.text != "" {
+        if nameInput.text != "" && ageInput.text != "" && locationInput.text != ""
+            && mobileInput.text != "" {
             
             // Send all data to Firebase
-            ref.child("Users").child(uid!).setValue(["name" : name, "age" : age, "location" : location, "mobile" : mobile, "uid" : uid, "bio" : bio])
+            ref.child("Users").child(uid!).setValue(["name" : name, "age" : age
+                , "location" : location, "mobile" : mobile, "uid" : uid, "bio" : bio])
+            
+            // Alert user
+            createAlert(title: "Congratulations!", message: "Your profile is succesfully updated!")
             
             // Set check variable
-//            self.check = 1
+            self.check = 1
+        } else {
+            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
         }
-//        } else {
-//            createAlert(title: "Attention", message: "Please fill in all the empty fields")
-//        }
         uploadImagePic(img1: image)
     }
     
     // Function to alert user with popup message
     func createAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: title, message: message
+            , preferredStyle: UIAlertControllerStyle.alert)
         
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default
+            , handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)

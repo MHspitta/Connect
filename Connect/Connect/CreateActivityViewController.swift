@@ -30,7 +30,10 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
     var category: String!
     var userName: String!
     let uid = Auth.auth().currentUser?.uid
-    let categories = ["Outdoor Sports", "Swimming", "Chilling", "Game", "Movie", "Football", "Festival", "Party", "Theather", "Extreme sports", "Water Activities", "Self care", "Running", "Music", "Indoor Sports", "Food", "Car", "Girl's Night", "Men's Night"]
+    let categories = ["Outdoor Sports", "Swimming", "Chilling", "Game", "Movie"
+        , "Football", "Festival", "Party", "Theater", "Extreme sports", "Water Activities"
+        , "Self care", "Running", "Music", "Indoor Sports", "Food", "Car", "Girl's Night"
+        , "Men's Night"]
     
     //MARK: - Overrides
     
@@ -92,7 +95,8 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         return 1
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int
+        , forComponent component: Int) -> String? {
         return categories[row]
     }
     
@@ -100,7 +104,8 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         return categories.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int
+        , inComponent component: Int) {
         category = categories[row]
     }
     
@@ -109,7 +114,6 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
     // Function to create activity when button pressed
     @IBAction func createActivty(_ sender: UIButton) {
         uploadData()
-        clearAll()
     }
     
     // Function to upload all data to firebase
@@ -126,13 +130,18 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
         let autoID = newRef.key
         
         // Check input of user
-        if activityName.text != "" && category != "" && maxParticipants.text != "" && locationActivity.text != "" && descriptionTextfield.text != "" {
+        if activityName.text != "" && category != "" && maxParticipants.text != ""
+            && locationActivity.text != "" && descriptionTextfield.text != "" {
             
             // Send all data to firebase
-            newRef.setValue(["activity" : activityName.text!, "category" : category, "participants(max)" : maxParticipants.text!, "date" : stringDate, "location" : locationActivity.text!, "description" : descriptionTextfield.text!, "participating(uid)" : uid, "creator" : uid, "organisor" : userName, "activityID" : autoID])
+            newRef.setValue(["activity" : activityName.text!, "category" : category
+                , "participants(max)" : maxParticipants.text!, "date" : stringDate
+                , "location" : locationActivity.text!, "description" : descriptionTextfield.text!
+                , "participating(uid)" : uid, "creator" : uid, "organisor" : userName, "activityID" : autoID])
             
             // Alert user
             createAlert(title: "Congratulations!", message: "Your activity is succesfully created!")
+            clearAll()
         } else {
             createAlert(title: "Attention!", message: "Please complete the empty spaces to create activity!")
         }
@@ -140,9 +149,11 @@ class CreateActivityViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     // Function to alert user with popup
     func createAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: title, message: message
+            , preferredStyle: UIAlertControllerStyle.alert)
         
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default
+            , handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)

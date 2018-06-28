@@ -216,10 +216,12 @@ class ConnectViewController: UIViewController {
     func likeActivity() {
         
         // Add activitiy to User database
-        ref.child("Users").child(uid!).child("participatingActivities").childByAutoId().setValue(["id" : currentActivity.activityID])
+        ref.child("Users").child(uid!).child("participatingActivities").childByAutoId()
+            .setValue(["id" : currentActivity.activityID])
         
         // Add user uid to Acitivity database
-        ref.child("Activities").child(currentActivity.activityID).child("participating(uid)").childByAutoId().setValue(["id" : uid])
+        ref.child("Activities").child(currentActivity.activityID).child("participating(uid)")
+            .childByAutoId().setValue(["id" : uid])
     }
     
     // Function to fetch all activities
@@ -261,16 +263,19 @@ class ConnectViewController: UIViewController {
             }
             // Pop up alert message if user not registred yet
             if self.check2 != 1 {
-                self.createAlert(title: "WELCOME!" , message: "Please update your profile BEFORE using the app!!")
+                self.createAlert(title: "WELCOME!"
+                    , message: "Please update your profile BEFORE using the app!!")
             }
         })
     }
     
     // Function to alert user when not updated profile yet
     func createAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: title, message: message
+            , preferredStyle: UIAlertControllerStyle.alert)
         
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default
+            , handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)

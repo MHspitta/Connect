@@ -40,7 +40,8 @@ class SignUpViewController: UIViewController {
             if passwordText.text == passwordTextCheck.text {
                 
                 // Create user to Firebase
-                Auth.auth().createUser(withEmail: emailText.text! , password: passwordText.text! , completion: { (user, error) in
+                Auth.auth().createUser(withEmail: emailText.text! , password: passwordText.text!
+                    , completion: { (user, error) in
                     
                     // Check for errors
                     if user != nil {

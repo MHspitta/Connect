@@ -1045,18 +1045,21 @@
                                 <rect key="frame" x="0.0" y="346" width="375" height="466"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="abc-RG-8G8">
-                                        <rect key="frame" x="39" y="17.000000000000004" width="175" height="32.333333333333343"/>
+                                        <rect key="frame" x="39" y="17" width="164" height="32"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="32.329999999999998" id="Ilz-do-Q0t"/>
-                                            <constraint firstAttribute="width" constant="175" id="xLV-CN-IkQ"/>
+                                            <constraint firstAttribute="height" constant="32" id="46y-QY-6ka"/>
+                                            <constraint firstAttribute="width" constant="164" id="kDU-si-MOx"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="27"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fR-d6-CyV">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fR-d6-CyV">
                                         <rect key="frame" x="216" y="22" width="134" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="134" id="KjA-9d-N2W"/>
+                                            <constraint firstAttribute="height" constant="21" id="qwL-jL-7RW"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1155,8 +1158,10 @@
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <constraints>
-                                    <constraint firstItem="abc-RG-8G8" firstAttribute="top" secondItem="iS2-fn-IvT" secondAttribute="top" constant="17" id="2ec-gR-N8M"/>
-                                    <constraint firstItem="abc-RG-8G8" firstAttribute="leading" secondItem="iS2-fn-IvT" secondAttribute="leading" constant="39" id="5I6-MM-3d9"/>
+                                    <constraint firstItem="1fR-d6-CyV" firstAttribute="leading" secondItem="abc-RG-8G8" secondAttribute="trailing" constant="13" id="Md6-XX-Y1f"/>
+                                    <constraint firstItem="1fR-d6-CyV" firstAttribute="top" secondItem="iS2-fn-IvT" secondAttribute="top" constant="22" id="b6B-iq-KGr"/>
+                                    <constraint firstItem="abc-RG-8G8" firstAttribute="top" secondItem="iS2-fn-IvT" secondAttribute="top" constant="17" id="ok5-LB-IKz"/>
+                                    <constraint firstItem="abc-RG-8G8" firstAttribute="leading" secondItem="iS2-fn-IvT" secondAttribute="leading" constant="39" id="qnl-yz-Avy"/>
                                 </constraints>
                             </view>
                         </subviews>

@@ -110,7 +110,8 @@ class ActivitiesViewController: UIViewController, UITableViewDelegate, UITableVi
     
     // Function to fetch all activities that user participate
     func fetchActivityId() {
-        refHandle = ref.child("Users").child(uid!).child("participatingActivities").observe(.value, with: { (snapshot) in
+        refHandle = ref.child("Users").child(uid!).child("participatingActivities")
+            .observe(.value, with: { (snapshot) in
             
             if (snapshot.value as? [String:AnyObject]) != nil {
                 var idX: [Id] = []

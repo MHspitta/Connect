@@ -123,7 +123,8 @@ class ActivityDetailViewController: UIViewController {
     
     // Function to get the participants uid
     func getPartIds() {
-        refHandle = ref.child("Activities").child(activity.activityID).child("participating(uid)").observe(.value, with: { (snapshot) in
+        refHandle = ref.child("Activities").child(activity.activityID).child("participating(uid)")
+            .observe(.value, with: { (snapshot) in
             
             if (snapshot.value as? [String:AnyObject]) != nil {
                 var idX: [Id] = []
