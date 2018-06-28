@@ -30,7 +30,17 @@ class ProfileViewController: UIViewController {
     var userData: [String] = []
     var profileImage: UIImage?
     
+    // Check if there is an image
+    var check: Int = 0
+    
     //MARK: - Overrides
+    
+    // Update image immediately after editing
+    override func viewDidAppear(_ animated: Bool) {
+        if check == 1 {
+            fetchImage()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,6 +121,7 @@ class ProfileViewController: UIViewController {
                 let user = User(snapshot: snapshot)
                 self.updateLabels(user: user)
                 self.fetchImage()
+                self.check = 1
             }
         })
     }

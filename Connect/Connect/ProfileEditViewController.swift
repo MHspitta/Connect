@@ -92,21 +92,27 @@ class ProfileEditViewController: UIViewController {
     // Upload data to firebase
     func uploadData() {
         guard let name  = nameInput.text else {
+            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let age = ageInput.text else {
+            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let location = locationInput.text else {
+            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let mobile = mobileInput.text else {
+            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let image = imageView.image else {
+            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         guard let bio = bioTextView.text else {
+            createAlert(title: "Attention", message: "Please fill in all the empty fields to continue")
             return
         }
         
@@ -120,10 +126,11 @@ class ProfileEditViewController: UIViewController {
             ref.child("Users").child(uid!).setValue(["name" : name, "age" : age, "location" : location, "mobile" : mobile, "uid" : uid, "bio" : bio])
             
             // Set check variable
-            self.check = 1
-        } else {
-            createAlert(title: "Attention", message: "Please fill in all the empty fields")
+//            self.check = 1
         }
+//        } else {
+//            createAlert(title: "Attention", message: "Please fill in all the empty fields")
+//        }
         uploadImagePic(img1: image)
     }
     
